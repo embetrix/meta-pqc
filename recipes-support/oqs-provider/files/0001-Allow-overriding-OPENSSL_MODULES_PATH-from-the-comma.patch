@@ -1,0 +1,28 @@
+From 42fcccee3bbc32b5a6fddff3d616a33edc207df4 Mon Sep 17 00:00:00 2001
+From: Ayoub Zaki <ayoub.zaki@embetrix.com>
+Date: Sun, 29 Dec 2024 20:38:22 +0100
+Subject: [PATCH] Allow overriding OPENSSL_MODULES_PATH from the command line
+
+Signed-off-by: Ayoub Zaki <ayoub.zaki@embetrix.com>
+---
+ CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5276393..57c704f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -57,7 +57,9 @@ cmake_path(GET OPENSSL_CRYPTO_LIBRARY PARENT_PATH OQS_MODULES_PARENT_PATH)
+ cmake_path(APPEND OQS_MODULES_PARENT_PATH "ossl-modules" OUTPUT_VARIABLE OPENSSL_MODULES_PATH)
+ else()
+ get_filename_component(OPENSSL_LIB_DIR ${OPENSSL_CRYPTO_LIBRARY} DIRECTORY)
+-set(OPENSSL_MODULES_PATH ${OPENSSL_LIB_DIR}/ossl-modules)
++if(NOT DEFINED OPENSSL_MODULES_PATH)
++    set(OPENSSL_MODULES_PATH ${OPENSSL_LIB_DIR}/ossl-modules CACHE PATH "Path to OpenSSL modules")
++endif()
+ endif()
+ 
+ # Add required include for liboqs
+-- 
+2.43.0
+
