@@ -1,0 +1,42 @@
+header:
+  version: 11
+machine: "qemux86-64"
+distro: poky
+target:
+  - pqc-demo-image
+repos:
+  # It's current revision will be used to perform the build.
+  meta-pqc:
+  poky:
+    url: "https://git.yoctoproject.org/git/poky"
+    branch: scarthgap
+    path: "layers"
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+  meta-openembedded:
+    url: "https://github.com/openembedded/meta-openembedded.git"
+    branch: scarthgap
+    path: "layers/meta-openembedded"
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-perl:
+      meta-python:
+      meta-multimedia:
+      meta-filesystems:
+      meta-webserver:
+local_conf_header:
+  standard: |
+    CONF_VERSION = "2"
+    INHERIT += "rm_work"
+    PACKAGE_CLASSES = "package_deb"
+    DISTRO_FEATURES += "systemd usrmerge wifi"
+    VIRTUAL-RUNTIME_init_manager = "systemd"
+    DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+  sdk: |
+    SDKMACHINE = "x86_64"
