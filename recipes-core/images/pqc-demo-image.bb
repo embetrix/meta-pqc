@@ -8,4 +8,6 @@ IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-core-full-cmdline \
     ${CORE_IMAGE_BASE_INSTALL} \
+    liboqs \
+    liboqs-tests \
     "
