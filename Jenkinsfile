@@ -23,8 +23,7 @@ pipeline {
         stage('Build-Image') {
             steps {
                 sh "KAS_MACHINE=${params.MACHINE} KAS_TARGET=${params.IMAGE} kas-container build --force-checkout --update kas-pqc.yml"
-                archiveArtifacts artifacts: "build/tmp/deploy/images/${params.MACHINE}/${params.IMAGE}*.wic.* , \
-                                             build/tmp/deploy/images/${params.MACHINE}/*.manifest",
+                archiveArtifacts artifacts: "build/tmp/deploy/images/${params.MACHINE}/${params.IMAGE}*" ,
                                              followSymlinks: true,
                                              fingerprint: true,
                                              onlyIfSuccessful: true
