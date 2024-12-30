@@ -28,6 +28,22 @@ repos:
       meta-multimedia:
       meta-filesystems:
       meta-webserver:
+  meta-freescale:
+    url: "https://git.yoctoproject.org/git/meta-freescale.git"
+    branch: scarthgap
+    path: "layers/meta-freescale"
+  meta-freescale-3rdparty:
+    url: "https://github.com/Freescale/meta-freescale-3rdparty.git"
+    branch: scarthgap
+    path: "layers/meta-freescale-3rdparty"
+  meta-raspberrypi:
+    url: "https://git.yoctoproject.org/git/meta-raspberrypi.git"
+    branch: scarthgap
+    path: "layers/meta-raspberrypi"
+  meta-stm32mp15x:
+    url: "https://github.com/embexus/meta-stm32mp15x.git"
+    branch: scarthgap
+    path: "layers/meta-stm32mp15x"
 local_conf_header:
   standard: |
     CONF_VERSION = "2"
