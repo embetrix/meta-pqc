@@ -13,6 +13,8 @@ DEPENDS = "openssl"
 
 inherit pkgconfig cmake
 
+EXTRA_OECMAKE += "-DOQS_PERMIT_UNSUPPORTED_ARCHITECTURE=ON"
+
 PACKAGECONFIG ?= "shared release openssl"
 
 PACKAGECONFIG[shared]  = "-DBUILD_SHARED_LIBS=ON, -DBUILD_SHARED_LIBS=OFF"
