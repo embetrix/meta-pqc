@@ -11,6 +11,24 @@ S = "${WORKDIR}/git"
 
 inherit pkgconfig cmake
 
+DEPENDS = "openssl"
+
+do_compile:append () {
+    ${CMAKE_VERBOSE} cmake --build '${B}' --target examples -- ${EXTRA_OECMAKE_BUILD}
+}
+
+do_install:append () {
+    install -d ${D}${bindir}
+    install -m 0755 ${B}/rand  ${D}${bindir}/cpp-rand-example
+    install -m 0755 ${B}/sig   ${D}${bindir}/cpp-sig-example
+    install -m 0755 ${B}/kem   ${D}${bindir}/cpp-kem-example
+}
+
+PACKAGES += "${PN}-examples"
+RDEPENDS:${PN} += "liboqs"
+RDEPENDS:${PN}-examples += "liboqs"
+FILES:${PN}:remove  = " ${bindir}/*"
+FILES:${PN}-examples = "${bindir}"
 FILES:${PN}-dev = "${includedir} ${libdir}/cmake"
 
 ALLOW_EMPTY:${PN} = "1"

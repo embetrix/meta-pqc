@@ -17,6 +17,7 @@ IMAGE_INSTALL += "\
     openssl-bin  \
     liboqs \
     liboqs-tests \
+    liboqs-cpp-examples \ 
     oqs-provider \
     botan \
     "
