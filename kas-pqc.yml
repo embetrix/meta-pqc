@@ -44,11 +44,11 @@ repos:
     branch: scarthgap
     path: "layers/meta-raspberrypi"
   meta-stm32mp15x:
-    url: "https://github.com/embexus/meta-stm32mp15x.git"
+    url: "https://github.com/embetrix/meta-stm32mp15x.git"
     branch: scarthgap
     path: "layers/meta-stm32mp15x"
   meta-coral-ai:
-    url: "https://github.com/embexus/meta-coral-ai.git"
+    url: "https://github.com/embetrix/meta-coral-ai.git"
     branch: scarthgap
     path: "layers/meta-coral-ai"
 local_conf_header:
