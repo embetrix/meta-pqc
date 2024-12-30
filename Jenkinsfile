@@ -1,4 +1,5 @@
 pipeline {
+    agent any
 
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'scarthgap', selectedValue: 'DEFAULT', name: 'BRANCH', type: 'PT_BRANCH', description: 'branch to build'
@@ -40,10 +41,5 @@ pipeline {
             }
         }
 
-        stage ('Deploy-SDK') {
-            when {
-                expression { params.SDK == 'yes' }
-            }
-        }
     }
 }
