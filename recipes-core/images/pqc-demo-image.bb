@@ -8,6 +8,9 @@ IMAGE_INSTALL += "\
     packagegroup-core-boot \
     packagegroup-core-full-cmdline \
     ${CORE_IMAGE_BASE_INSTALL} \
+    strace \
+    nginx \
+    curl \
     openssl-bin  \
     liboqs \
     liboqs-tests \
