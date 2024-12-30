@@ -56,3 +56,6 @@ local_conf_header:
     EXTRA_IMAGE_FEATURES = "debug-tweaks"
   sdk: |
     SDKMACHINE = "x86_64"
+  license_flags: |
+    LICENSE_FLAGS_ACCEPTED += "synaptics-killswitch"
+    ACCEPT_FSL_EULA = "1"
