@@ -15,4 +15,5 @@ IMAGE_INSTALL += "\
     liboqs \
     liboqs-tests \
     oqs-provider \
+    botan \
     "
