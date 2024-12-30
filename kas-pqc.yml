@@ -31,6 +31,9 @@ repos:
   meta-freescale:
     url: "https://git.yoctoproject.org/git/meta-freescale.git"
     branch: scarthgap
+    # workaround for the issue with the meta-coral-ai:
+    # https://github.com/embetrix/meta-coral-ai/issues/2
+    commit: 41b923e59e048b9b2942ff737a4ddac386954c62
     path: "layers/meta-freescale"
   meta-freescale-3rdparty:
     url: "https://github.com/Freescale/meta-freescale-3rdparty.git"
@@ -44,6 +47,10 @@ repos:
     url: "https://github.com/embexus/meta-stm32mp15x.git"
     branch: scarthgap
     path: "layers/meta-stm32mp15x"
+  meta-coral-ai:
+    url: "https://github.com/embexus/meta-coral-ai.git"
+    branch: scarthgap
+    path: "layers/meta-coral-ai"
 local_conf_header:
   standard: |
     CONF_VERSION = "2"
