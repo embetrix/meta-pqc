@@ -12,6 +12,7 @@ SRCREV = "ec1e8431f92b52e5d437107a37dbe3408649e8c3"
 S = "${WORKDIR}/git"
 
 DEPENDS = "liboqs"
+RDEPENDS:${PN} += "liboqs"
 
 inherit pkgconfig cmake
 
