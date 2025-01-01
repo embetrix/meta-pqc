@@ -2,7 +2,7 @@ DESCRIPTION = "PQC Demo Image"
 
 inherit core-image
 
-IMAGE_FEATURES += "ssh-server-openssh"
+IMAGE_FEATURES += "package-management ssh-server-openssh"
 
 IMAGE_INSTALL += "\
     packagegroup-core-boot \
@@ -18,10 +18,8 @@ IMAGE_INSTALL += "\
     "
 
 IMAGE_INSTALL += "\
-    liboqs \
     liboqs-tests \
     liboqs-cpp-examples \
-    oqs-provider \
     python3-liboqs \
     "
 
