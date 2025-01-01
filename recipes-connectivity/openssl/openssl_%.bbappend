@@ -1,3 +1,5 @@
+RDEPENDS:${PN} += " ${@bb.utils.contains('DISTRO_FEATURES', 'pqc', 'oqs-provider', '', d)}"
+
 do_install:append () {
 
     if ${@bb.utils.contains('DISTRO_FEATURES','pqc','true','false',d)}; then
