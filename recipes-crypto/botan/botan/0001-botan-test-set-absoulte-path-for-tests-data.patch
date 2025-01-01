@@ -1,0 +1,26 @@
+From f0a0f7d339c9dff73b91b9cc160a31da3e6a1f09 Mon Sep 17 00:00:00 2001
+From: Ayoub Zaki <ayoub.zaki@embetrix.com>
+Date: Wed, 1 Jan 2025 17:09:31 +0100
+Subject: [PATCH] botan-test: set absoulte path for tests data
+
+Signed-off-by: Ayoub Zaki <ayoub.zaki@embetrix.com>
+---
+ src/tests/main.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/tests/main.cpp b/src/tests/main.cpp
+index 3e08a2715..b87c3a594 100644
+--- a/src/tests/main.cpp
++++ b/src/tests/main.cpp
+@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
+ 
+       const Botan_Tests::Test_Options opts(parser.get_arg_list("suites"),
+                                            parser.get_arg_list("skip-tests"),
+-                                           parser.get_arg_or("data-dir", "src/tests/data"),
++                                           parser.get_arg_or("data-dir", "/usr/share/botan/tests/data"),
+                                            parser.get_arg("pkcs11-lib"),
+                                            parser.get_arg("provider"),
+                                            parser.get_arg("drbg-seed"),
+-- 
+2.43.0
+

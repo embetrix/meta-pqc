@@ -15,10 +15,18 @@ IMAGE_INSTALL += "\
     nginx \
     curl \
     openssl-bin  \
+    "
+
+IMAGE_INSTALL += "\
     liboqs \
     liboqs-tests \
     liboqs-cpp-examples \
-    python3-liboqs \
     oqs-provider \
+    python3-liboqs \
+    "
+
+IMAGE_INSTALL += "\
     botan \
+    botan-bin \
+    botan-test \
     "
