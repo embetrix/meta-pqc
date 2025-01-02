@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ "scarthgap" ]
+  pull_request:
+    branches: [ "scarthgap" ]
+
+# env:
+#   #BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build
+      run: kas-container build kas-pqc.yml
+
+    - name: Test
+      working-directory: ${{github.workspace}}
+      run: echo Test
+
