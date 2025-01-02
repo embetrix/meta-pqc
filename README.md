@@ -8,9 +8,9 @@ Both OQS and Botan implement the latest NIST-approved Post-Quantum Cryptography 
 1. **CRYSTALS-Kyber**: A lattice-based key encapsulation mechanism (KEM).
 
 ### Digital Signature Algorithms
-1. **CRYSTALS-Dilithium**: A lattice-based digital signature algorithm.
-2. **FALCON**: A lattice-based digital signature algorithm.
-3. **SPHINCS+**: A hash-based digital signature algorithm.
+   **CRYSTALS-Dilithium**: A lattice-based digital signature algorithm.
+   **FALCON**: A lattice-based digital signature algorithm.
+   **SPHINCS+**: A hash-based digital signature algorithm.
 
 ## OQS (Open Quantum Safe)
 
