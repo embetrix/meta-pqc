@@ -2,8 +2,6 @@
 
 This layer is an OpenEmbedded/Yocto layer dedicated to Post-Quantum Cryptography, providing integration and testing of quantum-safe cryptographic algorithms for embedded Linux systems. It supports OQS (Open Quantum Safe) and Botan.
 
-## Note
-
 Both OQS and Botan implement the latest NIST-approved Post-Quantum Cryptography (PQC) algorithms:
 
 ### Public-Key Encryption and Key-Establishment Algorithms
