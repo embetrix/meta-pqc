@@ -5,12 +5,12 @@ This layer is an OpenEmbedded/Yocto layer dedicated to Post-Quantum Cryptography
 Both OQS and Botan implement the latest NIST-approved Post-Quantum Cryptography (PQC) algorithms:
 
 ### Public-Key Encryption and Key-Establishment Algorithms
-1. **CRYSTALS-Kyber**: A lattice-based key encapsulation mechanism (KEM).
+   *`CRYSTALS-Kyber`: A lattice-based key encapsulation mechanism (KEM).
 
 ### Digital Signature Algorithms
-   **CRYSTALS-Dilithium**: A lattice-based digital signature algorithm.
-   **FALCON**: A lattice-based digital signature algorithm.
-   **SPHINCS+**: A hash-based digital signature algorithm.
+   * `CRYSTALS-Dilithium`: A lattice-based digital signature algorithm.
+   * `FALCON`: A lattice-based digital signature algorithm.
+   * `SPHINCS+`: A hash-based digital signature algorithm.
 
 ## OQS (Open Quantum Safe)
 
