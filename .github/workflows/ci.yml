@@ -23,3 +23,8 @@ jobs:
       working-directory: ${{github.workspace}}
       run: echo Test
 
+    - name: Archive Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: ${{github.workspace}}/build/tmp/deploy/images/*/**.rootfs-*
