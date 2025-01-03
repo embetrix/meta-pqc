@@ -3,6 +3,8 @@ From: Ayoub Zaki <ayoub.zaki@embetrix.com>
 Date: Sun, 29 Dec 2024 20:38:22 +0100
 Subject: [PATCH] Allow overriding OPENSSL_MODULES_PATH from the command line
 
+Upstream-Status: Submitted
+[https://github.com/open-quantum-safe/oqs-provider/pull/607]
 Signed-off-by: Ayoub Zaki <ayoub.zaki@embetrix.com>
 ---
  CMakeLists.txt | 4 +++-
