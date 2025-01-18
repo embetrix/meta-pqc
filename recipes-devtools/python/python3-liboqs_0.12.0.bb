@@ -1,11 +1,11 @@
 SUMMARY = "Python 3 bindings for liboqs"
 HOMEPAGE = "https://openquantumsafe.org"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=643965392cf23865058f5b4a6b3fecbc"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=aab9fa3330e68324b66127a00f0e1bba"
 
 SRC_URI = "git://github.com/open-quantum-safe/liboqs-python.git;branch=main;protocol=https"
-# SRCREV tagged 0.10.0
-SRCREV = "02198f9c3366cfafdea38a7830b82b9bd78bcb32"
+# SRCREV tagged 0.12.0
+SRCREV = "7906e7879a099fa34217035957d977314f99757d"
 
 S = "${WORKDIR}/git"
 
