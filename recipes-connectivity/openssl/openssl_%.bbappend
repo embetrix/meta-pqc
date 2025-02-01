@@ -1,8 +1,8 @@
-RDEPENDS:${PN} += " ${@bb.utils.contains('DISTRO_FEATURES', 'pqc', 'oqs-provider', '', d)}"
+RDEPENDS:${PN} += " ${@bb.utils.contains('DISTRO_FEATURES', 'oqs', 'oqs-provider', '', d)}"
 
 do_install:append () {
 
-    if ${@bb.utils.contains('DISTRO_FEATURES','pqc','true','false',d)}; then
+    if ${@bb.utils.contains('DISTRO_FEATURES','oqs','true','false',d)}; then
         # Enable oqsprovider
         sed -i "s/default = default_sect/default = default_sect\noqsprovider = oqsprovider_sect/g" ${D}${sysconfdir}/ssl/openssl.cnf
         sed -i "s/\[default_sect\]/\[default_sect\]\nactivate = 1\n\[oqsprovider_sect\]\nactivate = 1\n/g" ${D}${sysconfdir}/ssl/openssl.cnf

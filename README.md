@@ -28,7 +28,7 @@ For more information, visit the [Botan website](https://botan.randombit.net).
 
 This layer can be integrated in your layer(s) or built standalone using [kas-tool](https://github.com/siemens/kas):
 
-To Enable OpenSSL with PQC support using `oqs-provider` you should set: `DISTRO_FEATURES += "pqc"`
+To Enable OpenSSL with PQC support using `oqs-provider` you should set: `DISTRO_FEATURES += "oqs"`
 
 ```sh
 KAS_MACHINE=<MACHINE> kas build kas-pqc.yml
