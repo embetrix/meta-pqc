@@ -19,9 +19,9 @@ do_compile:append () {
 
 do_install:append () {
     install -d ${D}${bindir}
-    install -m 0755 ${B}/rand  ${D}${bindir}/cpp-rand-example
-    install -m 0755 ${B}/sig   ${D}${bindir}/cpp-sig-example
-    install -m 0755 ${B}/kem   ${D}${bindir}/cpp-kem-example
+    install -m 0755 ${B}/rand  ${D}${bindir}/oqs_cpp_rand
+    install -m 0755 ${B}/sig   ${D}${bindir}/oqs_cpp_sig
+    install -m 0755 ${B}/kem   ${D}${bindir}/oqs_cpp_kem
 }
 
 PACKAGES += "${PN}-examples"

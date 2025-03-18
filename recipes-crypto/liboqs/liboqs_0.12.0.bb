@@ -38,8 +38,12 @@ PACKAGECONFIG[distributed] = "-DOQS_DIST_BUILD=ON, -DOQS_DIST_BUILD=OFF"
 
 do_install:append () {
     install -d ${D}${bindir}
-    install -m 0755 ${B}/tests/test_*    ${D}${bindir}
-    install -m 0755 ${B}/tests/speed_*   ${D}${bindir}
+    for f in ${B}/tests/test_*; do
+      install -m 0755 $f  ${D}${bindir}/oqs_$(basename $f)
+    done
+    for f in ${B}/tests/speed_*; do
+      install -m 0755 $f  ${D}${bindir}/oqs_$(basename $f)
+    done
 }
 
 PACKAGES += "${PN}-tests"
