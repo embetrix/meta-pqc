@@ -1,0 +1,13 @@
+[Unit]
+Description=openss pqc tls server service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/opt/oqs-demos/certs
+ExecStartPre=/opt/oqs-demos/scripts/device-certs.sh
+ExecStart=/usr/bin/openssl s_server -cert pqc-device-cert.pem -key pqc-device-key.pem -CAfile pqc-ca-cert.pem \
+         -groups kyber768:frodo640shake -www -tls1_3 -accept 4443
+
+[Install]
+WantedBy=multi-user.target
