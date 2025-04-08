@@ -12,7 +12,7 @@ SRC_URI = " \
 
 inherit systemd
 
-RDEPENDS:${PN} += "openssl-bin oqs-provider"
+RDEPENDS:${PN} += "openssl-bin oqs-provider hostname-setup"
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
