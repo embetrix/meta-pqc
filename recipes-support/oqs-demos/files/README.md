@@ -25,3 +25,7 @@ curl  --cacert /opt/oqs-demos/certs/pqc-ca-cert.pem  --curves kyber768 https://l
 ```
 curl -v --cacert /opt/oqs-demos/certs/pqc-ca-cert.pem --curves kyber768  https://localhost:4433
 ```
+
+```
+curl -v --cacert /opt/oqs-demos/certs/pqc-ca-cert.pem --curves X25519MLKEM768  https://localhost:1433
+```

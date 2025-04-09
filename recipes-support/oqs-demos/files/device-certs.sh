@@ -1,5 +1,5 @@
 #!/bin/sh
-# generate pqc device certificate
+# generate pqc/hybrid device certificate
 # 
 
 # Get device IP
@@ -26,5 +26,19 @@ if [ ! -f pqc-device-key.pem ] || [ ! -f pqc-device-cert.pem ]; then
     openssl x509 -req -in pqc-device-csr.pem -CA pqc-ca-cert.pem -CAkey pqc-ca-key.pem \
             -CAcreateserial -days 360 \
             -out pqc-device-cert.pem \
+            -copy_extensions copy  || exit 1
+fi
+
+
+if [ ! -f rsa-device-key.pem ] || [ ! -f rsa-device-cert.pem ]; then
+
+    openssl req -new -newkey rsa:4096 -keyout rsa-device-key.pem \
+            -out rsa-device-csr.pem -nodes \
+            -subj "/C=DE/ST=BW/O=Embetrix/CN=$HOSTNAME" \
+            -addext "subjectAltName=DNS:$HOSTNAME, DNS:localhost,IP:$DEVICE_IP,IP:127.0.0.1" || exit 1
+
+    openssl x509 -req -in rsa-device-csr.pem -CA pqc-ca-cert.pem -CAkey pqc-ca-key.pem \
+            -CAcreateserial -days 360 \
+            -out rsa-device-cert.pem \
             -copy_extensions copy  || exit 1
 fi
