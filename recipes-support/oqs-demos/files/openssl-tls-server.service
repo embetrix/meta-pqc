@@ -1,7 +1,9 @@
 [Unit]
-Description=openss pqc tls server service
+Description=openssl pqc tls server service
 After=network-online.target
 Wants=network-online.target
+Before=nginx.service
+Wants=nginx.service
 
 [Service]
 WorkingDirectory=/opt/oqs-demos/certs

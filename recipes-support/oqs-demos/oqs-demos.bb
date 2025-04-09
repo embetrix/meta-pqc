@@ -6,13 +6,14 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 SRC_URI = " \
            file://pqc-ca-cert.pem \
            file://pqc-ca-key.pem \
+           file://nginx-pqc-ssl.conf \
            file://device-certs.sh \
            file://openssl-tls-server.service \
            "
 
 inherit systemd
 
-RDEPENDS:${PN} += "openssl-bin oqs-provider hostname-setup"
+RDEPENDS:${PN} += "openssl-bin oqs-provider hostname-setup nginx"
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
@@ -20,9 +21,11 @@ do_install () {
     install -m 0644 ${WORKDIR}/pqc-ca-key.pem   ${D}/opt/oqs-demos/certs
     install -d ${D}/opt/oqs-demos/scripts
 	install -m 0755 ${WORKDIR}/device-certs.sh ${D}/opt/oqs-demos/scripts/device-certs.sh
+    install -d ${D}${sysconfdir}/nginx/conf.d
+    install -m 0644 ${WORKDIR}/nginx-pqc-ssl.conf ${D}${sysconfdir}/nginx/conf.d/pqc-ssl.conf
 }
 
-FILES:${PN} = "/opt/oqs-demos"
+FILES:${PN} = "/opt/oqs-demos ${sysconfdir}/nginx/conf.d/pqc-ssl.conf"
 
 SYSTEMD_SERVICE:${PN} = "openssl-tls-server.service"
 SYSTEMD_PACKAGES = "${PN}"
