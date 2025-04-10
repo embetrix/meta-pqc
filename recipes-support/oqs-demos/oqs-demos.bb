@@ -14,12 +14,13 @@ SRC_URI = " \
 
 inherit systemd
 
-RDEPENDS:${PN} += "openssl-bin oqs-provider hostname-setup nginx"
+RDEPENDS:${PN} += "openssl-bin oqs-provider hostname-setup nginx ca-certificates"
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
     install -m 0644 ${WORKDIR}/pqc-ca-cert.pem  ${D}/opt/oqs-demos/certs
     install -m 0644 ${WORKDIR}/pqc-ca-key.pem   ${D}/opt/oqs-demos/certs
+   
     install -d ${D}/opt/oqs-demos/scripts
     install -m 0755 ${WORKDIR}/device-certs.sh ${D}/opt/oqs-demos/scripts/device-certs.sh
     install -d ${D}${sysconfdir}/nginx/conf.d
