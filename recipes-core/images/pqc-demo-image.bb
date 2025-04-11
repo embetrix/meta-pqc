@@ -23,9 +23,3 @@ IMAGE_INSTALL += "\
     oqs-demos \
     python3-liboqs \
     "
-
-IMAGE_INSTALL += "\
-    botan \
-    botan-bin \
-    botan-test \
-    "
