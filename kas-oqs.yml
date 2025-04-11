@@ -3,10 +3,10 @@ header:
 machine: "qemux86-64"
 distro: poky
 target:
-  - pqc-demo-image
+  - oqs-demo-image
 repos:
   # It's current revision will be used to perform the build.
-  meta-pqc:
+  meta-oqs:
   poky:
     url: "https://git.yoctoproject.org/git/poky"
     branch: scarthgap

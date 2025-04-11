@@ -1,3 +1,3 @@
-#enable ssl in libcurl
+#enable openssl in libcurl
 PACKAGECONFIG:append= " openssl"
 

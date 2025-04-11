@@ -1,4 +1,4 @@
-DESCRIPTION = "PQC Demo Image"
+DESCRIPTION = "OQS Demo Image"
 
 inherit core-image
 
@@ -20,6 +20,6 @@ IMAGE_INSTALL += "\
 IMAGE_INSTALL += "\
     liboqs-tests \
     liboqs-cpp-examples \
-    oqs-demos \
     python3-liboqs \
+    oqs-demos \
     "
