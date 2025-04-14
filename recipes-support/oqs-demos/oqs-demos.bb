@@ -4,6 +4,8 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
 SRC_URI = " \
+           file://ca-cert.pem \
+           file://ca-key.pem \
            file://pqc-ca-cert.pem \
            file://pqc-ca-key.pem \
            file://nginx-pqc-ssl.conf \
@@ -18,6 +20,8 @@ RDEPENDS:${PN} += "openssl-bin oqs-provider hostname-setup nginx ca-certificates
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
+    install -m 0644 ${WORKDIR}/ca-cert.pem  ${D}/opt/oqs-demos/certs
+    install -m 0644 ${WORKDIR}/ca-key.pem   ${D}/opt/oqs-demos/certs
     install -m 0644 ${WORKDIR}/pqc-ca-cert.pem  ${D}/opt/oqs-demos/certs
     install -m 0644 ${WORKDIR}/pqc-ca-key.pem   ${D}/opt/oqs-demos/certs
    
