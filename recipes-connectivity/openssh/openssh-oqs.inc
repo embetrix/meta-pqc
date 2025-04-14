@@ -23,11 +23,14 @@ DEPENDS += "liboqs"
 
 EXTRA_OECONF:append = " --with-liboqs-dir=${RECIPE_SYSROOT}/usr"
 
-# Enable hybrid mlkem768x25519-sha256 as default key-exchange mechanism
 do_install:append() {
 
     install -d ${D}${sysconfdir}/ssh/sshd_config.d
-    echo "KexAlgorithms mlkem768x25519-sha256" > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
+    # Enable hybrid mlkem768x25519-sha256 as default key-exchange mechanism
+    echo "KexAlgorithms mlkem768x25519-sha256"     > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
+    # Enable PQC type authentication
+    echo "PubkeyAcceptedKeyTypes +ssh-ed25519,ssh-rsa,ssh-falcon512,ssh-falcon1024,ssh-sphincssha2128fsimple"   > ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
+    echo "HostkeyAlgorithms      +ssh-ed25519,ssh-rsa,ssh-falcon512,ssh-falcon1024,ssh-sphincssha2128fsimple"  >> ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
 }
 
 FILES:${PN}-sshd += "${sysconfdir}/ssh/sshd_config.d"
