@@ -1,6 +1,6 @@
 DESCRIPTION = "OQS Demo Image"
 
-inherit core-image
+inherit core-image image-buildinfo
 
 IMAGE_FEATURES += "package-management ssh-server-openssh"
 
