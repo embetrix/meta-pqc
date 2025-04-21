@@ -81,21 +81,9 @@ done
 for key in ${HOST_KEYS} ; do
     [ -f $key ] && continue
     case $key in
-    *_ecdsa_nistp384_mldsa65_key)
-        echo "  generating ssh ECDSA NISTP384 MLDSA65 host key..."
-        generate_key $key ecdsa-nistp384-mldsa65
-        ;;
-    *_falcon512_key)
-        echo "  generating ssh FALCON512 host key..."
-        generate_key $key falcon512
-        ;;
-    *_falcon1024_key)
-        echo "  generating ssh FALCON1024 host key..."
-        generate_key $key falcon1024
-        ;;
-    *_sphincssha2128fsimple_key)
-        echo "  generating ssh SPHINCS+SHA2-128-F-SIMPLE host key..."
-        generate_key $key sphincssha2128fsimple
+    *_mldsa65_key)
+        echo "  generating ssh MLDSA65 host key..."
+        generate_key $key mldsa65
         ;;
     esac
 done

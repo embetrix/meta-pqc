@@ -29,8 +29,8 @@ do_install:append() {
     # Enable hybrid mlkem768x25519-sha256 as default key-exchange mechanism
     echo "KexAlgorithms mlkem768x25519-sha256"     > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
     # Enable PQC type authentication
-    echo "PubkeyAcceptedKeyTypes +ssh-falcon512,ssh-falcon1024,ssh-sphincssha2128fsimple"   > ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
-    echo "HostkeyAlgorithms      +ssh-falcon512,ssh-falcon1024,ssh-sphincssha2128fsimple"  >> ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
+    echo "PubkeyAcceptedKeyTypes +ssh-mldsa65"   > ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
+    echo "HostkeyAlgorithms      +ssh-mldsa65"  >> ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
     # Increase debug level
     echo "LogLevel DEBUG3"  > ${D}${sysconfdir}/ssh/sshd_config.d/debug.conf
 }
