@@ -52,3 +52,9 @@ openssl pkey -in rsa-device-key.pem -pubout -out rsa-device-pubkey.pem
 openssl pkeyutl -verify -inkey rsa-device-key.pem -in message.txt -sigfile signature.bin
 openssl pkeyutl -verify -pubin -inkey rsa-device-pubkey.pem -in message.txt -sigfile signature.bin
 ```
+
+# CMS Sign/Verify
+```
+openssl cms -sign -md sha256 -in message.txt -signer pqc-device-cert.pem -inkey pqc-device-key.pem -binary -out signature.bin 
+openssl cms -verify -in signature.bin -binary -content  message.txt -CAfile pqc-ca-cert.pem
+```
