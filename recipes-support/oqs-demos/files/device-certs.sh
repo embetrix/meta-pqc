@@ -18,7 +18,7 @@ fi
 
 if [ ! -f pqc-device-key.pem ] || [ ! -f pqc-device-cert.pem ]; then
 
-    openssl req -new -newkey dilithium3 -keyout pqc-device-key.pem \
+    openssl req -new -newkey mldsa65 -keyout pqc-device-key.pem \
             -out pqc-device-csr.pem -nodes \
             -subj "/C=DE/ST=BW/O=Embetrix/OU=PQC-DeviceCert/CN=$HOSTNAME" \
             -addext "subjectAltName=DNS:$HOSTNAME, DNS:localhost,IP:$DEVICE_IP,IP:127.0.0.1" || exit 1

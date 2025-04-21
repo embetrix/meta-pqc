@@ -3,7 +3,7 @@
 Generated using:
 
 ```
-openssl req -x509 -new -newkey dilithium3 -keyout pqc-ca-key.pem -out pqc-ca-cert.pem -nodes -subj "/O=Embetrix Root CA PQC"  -days 3650
+openssl req -x509 -new -newkey mldsa65 -keyout pqc-ca-key.pem -out pqc-ca-cert.pem -nodes -subj "/O=Embetrix PQC Root CA"  -days 3650
 ```
 # Root CA/key
 ```
@@ -12,7 +12,7 @@ openssl req -x509 -new -newkey rsa:4096 -keyout ca-key.pem  -out ca-cert.pem -no
 
 # OpenSSL TLS server 
 ```
-openssl s_server -cert pqc-device-cert.pem -key pqc-device-key.pem -CAfile pqc-ca-cert.pem -groups kyber768:frodo640shake -www -tls1_3 -accept 4443
+openssl s_server -cert pqc-device-cert.pem -key pqc-device-key.pem -CAfile pqc-ca-cert.pem -groups X25519MLKEM768:kyber768 -www -tls1_3 -accept 4443
 ```
 
 # connect to OpenSSL TLS server using openssl
