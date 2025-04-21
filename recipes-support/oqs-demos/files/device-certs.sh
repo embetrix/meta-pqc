@@ -20,7 +20,7 @@ if [ ! -f pqc-device-key.pem ] || [ ! -f pqc-device-cert.pem ]; then
 
     openssl req -new -newkey dilithium3 -keyout pqc-device-key.pem \
             -out pqc-device-csr.pem -nodes \
-            -subj "/C=DE/ST=BW/O=Embetrix/CN=$HOSTNAME" \
+            -subj "/C=DE/ST=BW/O=Embetrix/OU=PQC-DeviceCert/CN=$HOSTNAME" \
             -addext "subjectAltName=DNS:$HOSTNAME, DNS:localhost,IP:$DEVICE_IP,IP:127.0.0.1" || exit 1
 
     openssl x509 -req -in pqc-device-csr.pem -CA pqc-ca-cert.pem -CAkey pqc-ca-key.pem \
@@ -40,7 +40,7 @@ if [ ! -f rsa-device-key.pem ] || [ ! -f rsa-device-cert.pem ]; then
 
     openssl req -new -newkey rsa:4096 -keyout rsa-device-key.pem \
             -out rsa-device-csr.pem -nodes \
-            -subj "/C=DE/ST=BW/O=Embetrix/CN=$HOSTNAME" \
+            -subj "/C=DE/ST=BW/O=Embetrix/OU=DeviceCert/CN=$HOSTNAME" \
             -addext "subjectAltName=DNS:$HOSTNAME, DNS:localhost,IP:$DEVICE_IP,IP:127.0.0.1" || exit 1
 
     openssl x509 -req -in rsa-device-csr.pem -CA ca-cert.pem -CAkey ca-key.pem \
