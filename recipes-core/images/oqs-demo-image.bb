@@ -20,6 +20,6 @@ IMAGE_INSTALL += "\
 IMAGE_INSTALL += "\
     liboqs-tests \
     liboqs-cpp-examples \
-    python3-liboqs \
+    python3-liboqs-examples \
     oqs-demos \
     "

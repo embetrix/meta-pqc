@@ -14,4 +14,20 @@ RDEPENDS:${PN} += "python3-cffi python3-ctypes"
 
 inherit setuptools3
 
+do_install:append () {
+    install -d ${D}${bindir}
+    install -m 0755 ${B}/examples/rand.py  ${D}${bindir}/oqs_python_rand
+    install -m 0755 ${B}/examples/sig.py   ${D}${bindir}/oqs_python_sig
+    install -m 0755 ${B}/examples/kem.py   ${D}${bindir}/oqs_python_kem
+
+    sed -i '1s|^|#!/usr/bin/env python3\n|' ${D}${bindir}/oqs_python_rand
+    sed -i '1s|^|#!/usr/bin/env python3\n|' ${D}${bindir}/oqs_python_sig
+    sed -i '1s|^|#!/usr/bin/env python3\n|' ${D}${bindir}/oqs_python_kem
+}
+
+# Put examples into separate packages
+PACKAGE_BEFORE_PN += "${PN}-examples"
+FILES:${PN}-examples = "${bindir}"
+RDEPENDS:${PN}-examples = "${PN}"
+
 BBCLASSEXTEND = "native nativesdk"
