@@ -1,4 +1,4 @@
-Thank you for contributing to `meta-pqc`!
+Thank you for contributing to `meta-oqs`!
 
 By submitting this pull request, you confirm that:
 - This contribution is your original work or you have the necessary rights to submit it.
