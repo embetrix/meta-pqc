@@ -1,6 +1,6 @@
 # meta-oqs
 
-This layer is an OpenEmbedded/Yocto layer dedicated to Open Quantum Safe, providing integration and testing of quantum-safe cryptographic algorithms for embedded Linux systems. 
+This layer is an OpenEmbedded/Yocto layer dedicated to Open Quantum Safe, providing experimental integration and testing of quantum-safe cryptographic algorithms for embedded Linux systems.
 
 
 ## OQS (Open Quantum Safe)
@@ -30,12 +30,14 @@ KAS_MACHINE=<MACHINE> kas-container build kas-oqs.yml
 for example:
 
 ```sh
-KAS_MACHINE=qemux86-64 kas build kas-oqs.yml
+KAS_MACHINE=raspberrypi5 kas build kas-oqs.yml
 ```
 
-## Run in Qemu
+## Build & Run for Qemu
 
 ```sh
+KAS_MACHINE=qemux86-64 kas build kas-oqs.yml
+
 KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nographic qemuparams="-m 1024"'
 ```
 
