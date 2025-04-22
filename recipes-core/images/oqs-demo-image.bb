@@ -10,6 +10,7 @@ IMAGE_INSTALL += "\
     ${CORE_IMAGE_BASE_INSTALL} \
     htop \
     tcpdump \
+    hyperfine \
     gdbserver \
     strace \
     nginx \
