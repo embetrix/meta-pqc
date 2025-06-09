@@ -15,9 +15,9 @@ SRC_URI = "git://github.com/open-quantum-safe/openssh.git;branch=OQS-v9;protocol
            file://sshd_check_keys \
            "
 
-SRCREV = "4afbf050df0ec060de9260a37e6648dd68ea847b"
+SRCREV = "a55575abb72193e244c653e18ff2b9ef68cf9956"
 S = "${WORKDIR}/git"
-PV = "v9.7-oqs-snapshot-2024-08"
+PV = "v9.7-oqs-snapshot-2025-05"
 
 DEPENDS += "liboqs"
 
