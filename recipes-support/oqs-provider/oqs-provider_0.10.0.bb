@@ -4,7 +4,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=ab9b4308908ace39992d3080dd26824a"
 
 SRC_URI = "git://github.com/open-quantum-safe/oqs-provider.git;branch=main;protocol=https"
-SRCREV = "848b4e6abaa89e769c4db46ca78f91000f67ca52"
+SRCREV = "f076e91faab88871ff1973db0287cc6e4b94c4b0"
 
 S = "${WORKDIR}/git"
 
