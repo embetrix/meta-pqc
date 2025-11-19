@@ -4,8 +4,8 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=4b93ef2da47496727a4e8a59f443844e"
 
 SRC_URI = "git://github.com/open-quantum-safe/liboqs.git;branch=main;protocol=https"
-# SRCREV tagged 0.14.0
-SRCREV = "94b421ebb82405c843dba4e9aa521a56ee5a333d"
+# SRCREV tagged 0.15.0
+SRCREV = "97f6b86b1b6d109cfd43cf276ae39c2e776aed80"
 
 S = "${WORKDIR}/git"
 
