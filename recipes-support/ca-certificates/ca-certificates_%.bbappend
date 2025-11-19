@@ -4,7 +4,7 @@ SRC_URI += " \
            file://ca-cert.pem \
            file://pqc-ca-cert.pem \
            "
-
+# Add demo classical CA and PQC CA to certificates truststore 
 do_install:prepend () {
     if ${@bb.utils.contains('DISTRO_FEATURES','oqs','true','false',d)}; then
         install -d ${D}${datadir}/ca-certificates/demo
