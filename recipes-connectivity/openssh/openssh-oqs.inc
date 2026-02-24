@@ -26,8 +26,8 @@ EXTRA_OECONF:append = " --with-liboqs-dir=${RECIPE_SYSROOT}/usr"
 do_install:append() {
 
     install -d ${D}${sysconfdir}/ssh/sshd_config.d
-    # Enable hybrid mlkem768x25519-sha256 as default key-exchange mechanism
-    echo "KexAlgorithms curve25519-sha256,mlkem768x25519-sha256,ml-kem-1024-sha384"     > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
+    # Enable classical/hybrid key-exchange mechanisms
+    echo "KexAlgorithms curve25519-sha256,mlkem768x25519-sha256"     > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
     # Enable PQC type authentication
     echo "PubkeyAcceptedKeyTypes +ssh-mldsa65"   > ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
     echo "HostkeyAlgorithms      +ssh-mldsa65"  >> ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
