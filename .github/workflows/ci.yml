@@ -1,30 +1,29 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ "scarthgap" ]
   pull_request:
     branches: [ "scarthgap" ]
 
-# env:
-#   #BUILD_TYPE: Release
-
 jobs:
-  build:
-    runs-on: self-hosted
+  oelint:
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Build
-      run: kas-container dump kas-oqs.yml
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-    - name: Test
-      working-directory: ${{github.workspace}}
-      run: echo Test
+      - name: Install oelint-adv
+        run: pip install oelint-adv==9.3.3
 
-    - name: Archive Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-artifacts
-        path: ${{github.workspace}}/build/tmp/deploy/images/*/**.rootfs-*
+      - name: Run OE Linter
+        run: oelint-adv .
