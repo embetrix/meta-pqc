@@ -54,11 +54,11 @@ do_install:append() {
 	install -m 0644 ${WORKDIR}/device-certs.service ${D}${systemd_unitdir}/system/
 
 	# Enable units template instances provided by openvpn
+    install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-classical.service
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-hybrid.service
-	install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-pqc.service
 }
