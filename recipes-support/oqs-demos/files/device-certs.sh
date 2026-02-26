@@ -1,6 +1,18 @@
 #!/bin/sh
-# generate pqc/classical device certificates
-# 
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2026 Embetrix - https://www.embetrix.com
+# Author: ayoub.zaki@embetrix.com
+#
+# Generate PQC and classical (RSA) device certificates
+# Usage: device-certs.sh [--force]
+#   --force: regenerate all device certificates even if they already exist
+
+
+if [ "$1" = "--force" ]; then
+    echo "Force mode: regenerating all device certificates"
+    rm -f pqc-device-*.pem
+    rm -f rsa-device-*.pem
+fi
 
 # Get device IP
 DEVICE_IP=$(networkctl status | grep Address | awk '{print $2}')
