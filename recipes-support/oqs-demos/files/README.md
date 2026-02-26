@@ -3,11 +3,11 @@
 Generated using:
 
 ```
-openssl req -x509 -new -newkey mldsa65 -keyout pqc-ca-key.pem -out pqc-ca-cert.pem -nodes -subj "/O=Embetrix PQC Root CA"  -days 3650
+openssl req -x509 -new -newkey mldsa65 -keyout pqc-ca-key.pem -out pqc-ca-cert.pem -nodes -subj "/O=Embetrix PQC Root CA" -addext "keyUsage=critical,keyCertSign,cRLSign" -days 3650
 ```
 # Root CA/key
 ```
-openssl req -x509 -new -newkey rsa:4096 -keyout ca-key.pem  -out ca-cert.pem -nodes -subj "/O=Embetrix Root CA"  -days 3650
+openssl req -x509 -new -newkey rsa:4096 -keyout ca-key.pem  -out ca-cert.pem -nodes -subj "/O=Embetrix Root CA" -addext "keyUsage=critical,keyCertSign,cRLSign" -days 3650
 ```
 
 # OpenSSL TLS server 
