@@ -13,7 +13,7 @@ SRC_URI = " \
            file://nginx-pqc.conf \
            file://openvpn-classical.conf \
            file://openvpn-hybrid.conf \
-           file://openvpn-hybrid.conf \
+           file://openvpn-pqc.conf \
            file://device-certs.sh \
            file://device-certs.service \
            "
@@ -33,9 +33,9 @@ do_install () {
     install -d ${D}/opt/oqs-demos/scripts
     install -m 0755 ${WORKDIR}/device-certs.sh ${D}/opt/oqs-demos/scripts/device-certs.sh
     install -d ${D}${sysconfdir}/nginx/conf.d
-    install -m 0644 ${WORKDIR}/nginx-classical.conf ${D}${sysconfdir}/nginx/conf.d/classical.conf
-    install -m 0644 ${WORKDIR}/nginx-hybrid.conf ${D}${sysconfdir}/nginx/conf.d/hybrid.conf
-    install -m 0644 ${WORKDIR}/nginx-pqc.conf ${D}${sysconfdir}/nginx/conf.d/pqc.conf
+    install -m 0644 ${WORKDIR}/nginx-classical.conf ${D}${sysconfdir}/nginx/conf.d/nginx-classical.conf
+    install -m 0644 ${WORKDIR}/nginx-hybrid.conf ${D}${sysconfdir}/nginx/conf.d/nginx-hybrid.conf
+    install -m 0644 ${WORKDIR}/nginx-pqc.conf ${D}${sysconfdir}/nginx/conf.d/nginx-pqc.conf
 
     install -d ${D}${sysconfdir}/openvpn/server
     install -m 0644 ${WORKDIR}/openvpn-classical.conf ${D}${sysconfdir}/openvpn/server/openvpn-classical.conf
@@ -61,5 +61,4 @@ do_install:append() {
 	install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-pqc.service
-
 }
