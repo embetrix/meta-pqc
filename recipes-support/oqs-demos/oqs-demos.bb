@@ -8,9 +8,11 @@ SRC_URI = " \
            file://ca-key.pem \
            file://pqc-ca-cert.pem \
            file://pqc-ca-key.pem \
-           file://nginx-pqc-ssl.conf \
-           file://nginx-hybrid-ssl.conf \
-           file://openvpn-pqc.conf \
+           file://nginx-classical.conf \
+           file://nginx-hybrid.conf \
+           file://nginx-pqc.conf \
+           file://openvpn-classical.conf \
+           file://openvpn-hybrid.conf \
            file://openvpn-hybrid.conf \
            file://device-certs.sh \
            file://device-certs.service \
@@ -31,12 +33,14 @@ do_install () {
     install -d ${D}/opt/oqs-demos/scripts
     install -m 0755 ${WORKDIR}/device-certs.sh ${D}/opt/oqs-demos/scripts/device-certs.sh
     install -d ${D}${sysconfdir}/nginx/conf.d
-    install -m 0644 ${WORKDIR}/nginx-pqc-ssl.conf ${D}${sysconfdir}/nginx/conf.d/pqc-ssl.conf
-    install -m 0644 ${WORKDIR}/nginx-hybrid-ssl.conf ${D}${sysconfdir}/nginx/conf.d/hybrid-ssl.conf
+    install -m 0644 ${WORKDIR}/nginx-classical.conf ${D}${sysconfdir}/nginx/conf.d/classical.conf
+    install -m 0644 ${WORKDIR}/nginx-hybrid.conf ${D}${sysconfdir}/nginx/conf.d/hybrid.conf
+    install -m 0644 ${WORKDIR}/nginx-pqc.conf ${D}${sysconfdir}/nginx/conf.d/pqc.conf
 
     install -d ${D}${sysconfdir}/openvpn/server
-    install -m 0644 ${WORKDIR}/openvpn-pqc.conf ${D}${sysconfdir}/openvpn/server/openvpn-pqc.conf
+    install -m 0644 ${WORKDIR}/openvpn-classical.conf ${D}${sysconfdir}/openvpn/server/openvpn-classical.conf
     install -m 0644 ${WORKDIR}/openvpn-hybrid.conf ${D}${sysconfdir}/openvpn/server/openvpn-hybrid.conf
+    install -m 0644 ${WORKDIR}/openvpn-pqc.conf ${D}${sysconfdir}/openvpn/server/openvpn-pqc.conf
 
 }
 
@@ -50,9 +54,12 @@ do_install:append() {
 	install -m 0644 ${WORKDIR}/device-certs.service ${D}${systemd_unitdir}/system/
 
 	# Enable units template instances provided by openvpn
+	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
+		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-classical.service
+	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
+		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-hybrid.service
 	install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-pqc.service
-	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
-		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-hybrid.service
+
 }
