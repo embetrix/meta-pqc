@@ -58,3 +58,29 @@ openssl pkeyutl -verify -pubin -inkey rsa-device-pubkey.pem -in message.txt -sig
 openssl cms -sign -md sha256 -in message.txt -signer pqc-device-cert.pem -inkey pqc-device-key.pem -binary -out signature.bin 
 openssl cms -verify -in signature.bin -binary -content  message.txt -CAfile pqc-ca-cert.pem
 ```
+
+# OpenVPN
+```
+openvpn \
+  --client \
+  --dev tun \
+  --proto udp \
+  --remote localhost 1195 \
+  --ca   /opt/oqs-demos/certs/pqc-ca-cert.pem \
+  --cert /opt/oqs-demos/certs/pqc-device-client-cert.pem \
+  --key  /opt/oqs-demos/certs/pqc-device-client-key.pem \
+  --verb 5
+```
+
+```
+openvpn \
+  --client \
+  --dev tun \
+  --proto udp \
+  --remote localhost 1194 \
+  --ca   /opt/oqs-demos/certs/ca-cert.pem \
+  --cert /opt/oqs-demos/certs/rsa-device-client-cert.pem \
+  --key  /opt/oqs-demos/certs/rsa-device-client-key.pem \
+  --remote-cert-tls server \
+  --verb 5
+  ```
