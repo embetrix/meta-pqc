@@ -13,7 +13,7 @@ SRC_URI = " \
            file://openvpn-pqc.conf \
            file://openvpn-hybrid.conf \
            file://device-certs.sh \
-           file://openssl-tls-server.service \
+           file://device-certs.service \
            "
 
 inherit systemd
@@ -42,14 +42,14 @@ do_install () {
 
 FILES:${PN} = "/opt/oqs-demos ${sysconfdir}/nginx/conf.d ${sysconfdir}/openvpn/server ${sysconfdir}/systemd"
 
-SYSTEMD_SERVICE:${PN} = "openssl-tls-server.service"
+SYSTEMD_SERVICE:${PN} = "device-certs.service"
 SYSTEMD_PACKAGES = "${PN}"
 
 do_install:append() {
 	install -d ${D}${systemd_unitdir}/system
-	install -m 0644 ${WORKDIR}/openssl-tls-server.service ${D}${systemd_unitdir}/system/
+	install -m 0644 ${WORKDIR}/device-certs.service ${D}${systemd_unitdir}/system/
 
-	# Enable openvpn template instances (unit provided by openvpn package)
+	# Enable units template instances provided by openvpn
 	install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-pqc.service

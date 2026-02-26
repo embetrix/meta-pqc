@@ -1,0 +1,15 @@
+[Unit]
+Description=device certificates creation service
+After=network-online.target
+Wants=network-online.target
+Before=nginx.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hybrid.service
+Wants=nginx.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hybrid.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/oqs-demos/certs
+ExecStart=/opt/oqs-demos/scripts/device-certs.sh
+
+[Install]
+WantedBy=multi-user.target
