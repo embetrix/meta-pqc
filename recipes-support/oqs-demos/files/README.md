@@ -60,15 +60,16 @@ openssl cms -verify -in signature.bin -binary -content  message.txt -CAfile pqc-
 ```
 
 # OpenVPN
+
 ```
 openvpn \
   --client \
   --dev tun \
   --proto udp \
-  --remote localhost 1195 \
-  --ca   /opt/oqs-demos/certs/pqc-ca-cert.pem \
-  --cert /opt/oqs-demos/certs/pqc-device-client-cert.pem \
-  --key  /opt/oqs-demos/certs/pqc-device-client-key.pem \
+  --remote localhost 1194 \
+  --ca   /opt/oqs-demos/certs/ca-cert.pem \
+  --cert /opt/oqs-demos/certs/rsa-device-client-cert.pem \
+  --key  /opt/oqs-demos/certs/rsa-device-client-key.pem \
   --verb 5
 ```
 
@@ -77,7 +78,19 @@ openvpn \
   --client \
   --dev tun \
   --proto udp \
-  --remote localhost 1194 \
+  --remote localhost 1195 \
+  --ca   /opt/oqs-demos/certs/ca-cert.pem \
+  --cert /opt/oqs-demos/certs/rsa-device-client-cert.pem \
+  --key  /opt/oqs-demos/certs/rsa-device-client-key.pem \
+  --verb 5
+```
+
+```
+openvpn \
+  --client \
+  --dev tun \
+  --proto udp \
+  --remote localhost 1196 \
   --ca   /opt/oqs-demos/certs/ca-cert.pem \
   --cert /opt/oqs-demos/certs/rsa-device-client-cert.pem \
   --key  /opt/oqs-demos/certs/rsa-device-client-key.pem \
