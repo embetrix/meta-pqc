@@ -22,5 +22,6 @@ IMAGE_INSTALL += "\
     liboqs-tests \
     liboqs-cpp-examples \
     python3-liboqs-examples \
+    liboqs-rust \
     oqs-demos \
     "
