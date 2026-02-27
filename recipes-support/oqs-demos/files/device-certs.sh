@@ -14,8 +14,8 @@ if [ "$1" = "--force" ]; then
     rm -f rsa-device-*.pem
 fi
 
-# Get device IP
-DEVICE_IP=$(networkctl status | grep Address | awk '{print $2}')
+# Get device IPv4 address
+DEVICE_IP=$(networkctl status | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' | grep -v '^127\.' | head -1)
 if ! echo "$DEVICE_IP" | grep -Eq '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
     echo "Invalid device IP: $DEVICE_IP"
     exit 1
