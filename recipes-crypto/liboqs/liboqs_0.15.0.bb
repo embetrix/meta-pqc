@@ -13,6 +13,8 @@ DEPENDS = "openssl"
 
 inherit pkgconfig cmake
 
+TOOLCHAIN = "clang"
+
 # Enable only NIST appoved Algorithms
 #EXTRA_OECMAKE = "-DOQS_ALGS_ENABLED=STD"
 
