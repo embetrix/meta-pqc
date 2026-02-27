@@ -16,12 +16,13 @@ SRC_URI = " \
            file://openvpn-pqc.conf \
            file://device-certs.sh \
            file://device-certs.service \
+           file://tls-handshake-bench.sh \
            "
 
 inherit systemd
 
 DEPENDS = "openssl-native oqs-provider-native"
-RDEPENDS:${PN} += "openssl-bin oqs-provider openvpn hostname-setup nginx ca-certificates"
+RDEPENDS:${PN} += "openssl-bin oqs-provider openvpn hostname-setup nginx ca-certificates cpufrequtils"
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
@@ -30,8 +31,6 @@ do_install () {
     install -m 0644 ${WORKDIR}/pqc-ca-cert.pem  ${D}/opt/oqs-demos/certs
     install -m 0644 ${WORKDIR}/pqc-ca-key.pem   ${D}/opt/oqs-demos/certs
    
-    install -d ${D}/opt/oqs-demos/scripts
-    install -m 0755 ${WORKDIR}/device-certs.sh ${D}/opt/oqs-demos/scripts/device-certs.sh
     install -d ${D}${sysconfdir}/nginx/conf.d
     install -m 0644 ${WORKDIR}/nginx-classical.conf ${D}${sysconfdir}/nginx/conf.d/nginx-classical.conf
     install -m 0644 ${WORKDIR}/nginx-hybrid.conf ${D}${sysconfdir}/nginx/conf.d/nginx-hybrid.conf
@@ -42,9 +41,12 @@ do_install () {
     install -m 0644 ${WORKDIR}/openvpn-hybrid.conf ${D}${sysconfdir}/openvpn/server/openvpn-hybrid.conf
     install -m 0644 ${WORKDIR}/openvpn-pqc.conf ${D}${sysconfdir}/openvpn/server/openvpn-pqc.conf
 
+    install -d ${D}${bindir}
+    install -m 0755 ${WORKDIR}/device-certs.sh       ${D}${bindir}/device-certs
+    install -m 0755 ${WORKDIR}/tls-handshake-bench.sh ${D}${bindir}/tls-handshake-bench
 }
 
-FILES:${PN} = "/opt/oqs-demos ${sysconfdir}/nginx/conf.d ${sysconfdir}/openvpn/server ${sysconfdir}/systemd"
+FILES:${PN} = "/opt/oqs-demos ${bindir} ${sysconfdir}/nginx/conf.d ${sysconfdir}/openvpn/server ${sysconfdir}/systemd"
 
 SYSTEMD_SERVICE:${PN} = "device-certs.service"
 SYSTEMD_PACKAGES = "${PN}"

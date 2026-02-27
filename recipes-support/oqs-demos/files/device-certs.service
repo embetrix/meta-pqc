@@ -9,7 +9,7 @@ Wants=nginx.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hy
 Type=oneshot
 RemainAfterExit=yes
 WorkingDirectory=/opt/oqs-demos/certs
-ExecStart=/opt/oqs-demos/scripts/device-certs.sh --force
+ExecStart=/usr/bin/device-certs --force
 Restart=on-failure
 RestartSec=3
 
