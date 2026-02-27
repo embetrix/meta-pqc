@@ -40,6 +40,13 @@ EXTRA_OECMAKE:aarch64:append = " \
     -DOQS_USE_ARM_SHA2_INSTRUCTIONS=ON   \
     -DOQS_USE_ARM_SHA3_INSTRUCTIONS=ON"
 
+# Enable build without optimizations for unsupported architectures
+python () {
+    arch = d.getVar('TARGET_ARCH')
+    if arch not in ['x86_64', 'aarch64']:
+        d.appendVar('EXTRA_OECMAKE', ' -DOQS_PERMIT_UNSUPPORTED_ARCHITECTURE=ON')
+}
+
 PACKAGECONFIG ?= "shared release"
 PACKAGECONFIG[shared]  = "-DBUILD_SHARED_LIBS=ON, -DBUILD_SHARED_LIBS=OFF"
 PACKAGECONFIG[openssl] = "-DOQS_USE_OPENSSL=ON, -DOQS_USE_OPENSSL=OFF"
