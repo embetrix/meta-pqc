@@ -18,7 +18,10 @@ CARGO_BUILD_FLAGS:append = " --offline"
 
 require ${BPN}-crates.inc
 
-DEPENDS = "openssl liboqs"
+DEPENDS = "openssl"
+
+# build liboqs submodule without optimizations
+export OQS_PERMIT_UNSUPPORTED_ARCHITECTURE = "ON"
 
 # bindgen uses libclang to parse C headers when cross-compiling we must point
 # it at the target sysroot so that types like ssize_t resolve to the correct
