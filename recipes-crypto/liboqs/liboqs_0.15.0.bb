@@ -14,7 +14,7 @@ DEPENDS = "openssl"
 inherit pkgconfig cmake
 
 # Enable only NIST appoved Algorithms
-EXTRA_OECMAKE = "-DOQS_ALGS_ENABLED=STD"
+#EXTRA_OECMAKE = "-DOQS_ALGS_ENABLED=STD"
 
 # Cross-compiling so disable it
 EXTRA_OECMAKE:append = " -DOQS_DIST_BUILD=OFF"
