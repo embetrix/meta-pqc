@@ -13,7 +13,7 @@ For more information, visit the [Open Quantum Safe website](https://openquantums
 
 > **Note:** While OpenSSL 3.5.x has added native support for NIST-approved PQC algorithms `liboqs` goes further by also including algorithms currently under evaluation in future NIST standardization rounds. Additionally `liboqs` is not tied to OpenSSL since it provides a standalone C library with bindings for C++, Rust and Python making it usable across different applications. More importantly the `oqs-provider` detects if OpenSSL 3.5+ is in use and automatically disables its own ML-KEM/ML-DSA implementations and deferring to OpenSSL's native code which is considered higher quality and more stable.
 
-> **Disclaimer:** The OQS project and `liboqs` are **experimental** and should not be used in production environments. The implementations are may contain security vulnerabilities and have not undergone the same level of auditing as established cryptographic libraries. See the [liboqs security policy](https://github.com/open-quantum-safe/liboqs/security) for details.
+> **Disclaimer:** The OQS project and `liboqs` are **experimental** and should not be used in production environments. The implementations may contain security vulnerabilities and have not undergone the same level of auditing as established cryptographic libraries. Side-channel and timing attacks are not part of the OQS threat model. See the [liboqs security policy](https://github.com/open-quantum-safe/liboqs/security) for more details.
 
 
 ## Software Stack
