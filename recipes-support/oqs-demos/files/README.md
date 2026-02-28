@@ -1,34 +1,40 @@
-# PQC Root CA/key
+# Root CA generation
+
+## PQC Root CA/key
 
 Generated using:
 
 ```
 openssl req -x509 -new -newkey mldsa65 -keyout pqc-ca-key.pem -out pqc-ca-cert.pem -nodes -subj "/O=Embetrix PQC Root CA" -addext "keyUsage=critical,keyCertSign,cRLSign" -days 3650
 ```
-# Root CA/key
+## RSA Root CA/key
 ```
 openssl req -x509 -new -newkey rsa:4096 -keyout ca-key.pem  -out ca-cert.pem -nodes -subj "/O=Embetrix Root CA" -addext "keyUsage=critical,keyCertSign,cRLSign" -days 3650
 ```
 
-# Connect to NGINX Classical server using curl
+# TLS connection testing
+
+## Connect to NGINX Classical server using curl
 ```
 curl -v  https://localhost:443
 ```
 
-# connect to NGINX PQC Hybrid TLS server using curl
+## connect to NGINX PQC Hybrid TLS server using curl
 
 ```
 curl -v   https://localhost:444
 ```
 
 
-# connect to NGINX PQC TLS server using curl
+## connect to NGINX PQC TLS server using curl
 
 ```
 curl -v   https://localhost:445
 ```
 
-# Sign/Verify
+# Signature
+
+# ML-DSA Sign/Verify
 ```
 echo "Some Text" >  message.txt
 openssl pkeyutl -sign -inkey pqc-device-key.pem -in message.txt -out signature.bin
@@ -37,15 +43,8 @@ openssl pkeyutl -verify -inkey pqc-device-key.pem -in message.txt -sigfile signa
 openssl pkeyutl -verify -pubin -inkey pqc-device-pubkey.pem -in message.txt -sigfile signature.bin
 ```
 
-```
-echo "Some Text" >  message.txt
-openssl pkeyutl -sign -inkey rsa-device-key.pem -in message.txt -out signature.bin
-openssl pkey -in rsa-device-key.pem -pubout -out rsa-device-pubkey.pem
-openssl pkeyutl -verify -inkey rsa-device-key.pem -in message.txt -sigfile signature.bin
-openssl pkeyutl -verify -pubin -inkey rsa-device-pubkey.pem -in message.txt -sigfile signature.bin
-```
 
-# CMS Sign/Verify
+# ML-DSA CMS Sign/Verify
 ```
 openssl cms -sign -md sha256 -in message.txt -signer pqc-device-cert.pem -inkey pqc-device-key.pem -binary -out signature.bin 
 openssl cms -verify -in signature.bin -binary -content  message.txt -CAfile pqc-ca-cert.pem
