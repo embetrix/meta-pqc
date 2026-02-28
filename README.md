@@ -29,12 +29,6 @@ This will make `OpenSSL` aware of Hybrid/PQC algorithms and set the default TLS 
 
 Also enables `OpenSSH` with Hybrid and pure PQC key exchange support on top of classical algorithms.
 
-To connect using hybrid PQC key exchange over SSH:
-
-```sh
-ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
-```
-
 > **Recommendation:** Hybrid key exchange such as `X25519MLKEM768` is the recommended approach as PQC algorithms are still maturing. Hybrid combines a classical algorithm (X25519) with a post-quantum one (MLKEM-768) providing the best balance between quantum resistance if PQC hold and classical security as a fallback if it doesn't.
 
 ## Language Bindings
@@ -119,6 +113,11 @@ Average TLS handshake: 60.87 ms (100 rounds)
 
 #### SSH 
 
+To connect using hybrid PQC key exchange over SSH:
+
+```sh
+ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
+```
 
 ## Build
 
