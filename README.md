@@ -53,6 +53,8 @@ The [`oqs-demos`](recipes-support/oqs-demos) recipe provides ready-to-use demons
 
 > **Note:** Hybrid and pure PQC key exchange (e.g. on ports `444`/`445` for Nginx, `1195`/`1196` for OpenVPN) require both endpoints to have PQC support enabled. To connect from a host without `oqs-provider`, you can use the [oqs-docker](https://github.com/embetrix/oqs-docker) container as a PQC-enabled client.
 
+For further demo commands (PQC sign/verify, CMS, OpenVPN client, etc.), see the [oqs-demos README](recipes-support/oqs-demos/files/README.md).
+
 ### Quick Test: 
 
 #### Hybrid TLS Handshake with Google:
