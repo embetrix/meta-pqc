@@ -10,30 +10,22 @@ openssl req -x509 -new -newkey mldsa65 -keyout pqc-ca-key.pem -out pqc-ca-cert.p
 openssl req -x509 -new -newkey rsa:4096 -keyout ca-key.pem  -out ca-cert.pem -nodes -subj "/O=Embetrix Root CA" -addext "keyUsage=critical,keyCertSign,cRLSign" -days 3650
 ```
 
-# OpenSSL TLS server 
+# Connect to NGINX Classical server using curl
 ```
-openssl s_server -cert pqc-device-cert.pem -key pqc-device-key.pem -CAfile pqc-ca-cert.pem -groups X25519MLKEM768:kyber768 -www -tls1_3 -accept 4443
-```
-
-# connect to OpenSSL TLS server using openssl
-```
-echo "q" | openssl s_client  -showcerts -connect localhost:4443
-```
-
-# connect to OpenSSL TLS server using curl
-```
-curl -v https://localhost:4443
-```
-
-# connect to NGINX PQC TLS server using curl
-```
-curl -v  https://localhost:4433
+curl -v  https://localhost:443
 ```
 
 # connect to NGINX PQC Hybrid TLS server using curl
 
 ```
-curl -v   https://localhost:1433
+curl -v   https://localhost:444
+```
+
+
+# connect to NGINX PQC TLS server using curl
+
+```
+curl -v   https://localhost:445
 ```
 
 # Sign/Verify
@@ -61,6 +53,7 @@ openssl cms -verify -in signature.bin -binary -content  message.txt -CAfile pqc-
 
 # OpenVPN
 
+## connect to classical key exchange:
 ```
 openvpn \
   --client \
@@ -73,6 +66,7 @@ openvpn \
   --verb 5
 ```
 
+## connect to PQC Hybrid key exchange:
 ```
 openvpn \
   --client \
@@ -85,6 +79,7 @@ openvpn \
   --verb 5
 ```
 
+## connect to pure PQC key exchange:
 ```
 openvpn \
   --client \
