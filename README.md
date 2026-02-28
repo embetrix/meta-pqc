@@ -109,7 +109,7 @@ Running 100 TLS handshakes for https://localhost:445 ...
 Average TLS handshake: 60.87 ms (100 rounds)
 ```
 
-> **Note:** This can also be used against any remote host (e.g. `tls-handshake-bench -h <remote-ip> -p 444 -n 100`).
+> **Note:** MLKEM operations run in microseconds so hybrid KEX adds almost no measurable overhead (~30 µs on raspberrypi5) compared to classical TLS
 
 #### SSH 
 
