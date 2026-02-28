@@ -87,21 +87,21 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 
 From the target, benchmark the three Nginx TLS modes using the built-in script:
 
-Classical:
+*Classical*
 ```sh
 root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 443 -n100
 Key Exchange: x25519
 Running 100 TLS handshakes for https://localhost:443 ...
 Average TLS handshake: 60.15 ms (100 rounds)
 ```
-Hybrid:
+*Hybrid*
 ```sh
 root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 444 -n100
 Key Exchange: X25519MLKEM768
 Running 100 TLS handshakes for https://localhost:444 ...
 Average TLS handshake: 49.03 ms (100 rounds)
 ```
-PQC:
+*PQC*
 ```sh
 root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 445 -n100
 Key Exchange: mlkem768
