@@ -8,8 +8,8 @@ SRCREV = "a635e341d6a4624d9bba36d158804762f316fe5e"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "liboqs"
-RDEPENDS:${PN} += "liboqs"
+DEPENDS = "liboqs openssl"
+RDEPENDS:${PN} += "liboqs openssl"
 
 inherit pkgconfig cmake
 
