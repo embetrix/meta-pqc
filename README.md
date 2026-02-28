@@ -11,7 +11,7 @@ OQS implements the latest [NIST-approved Post-Quantum Cryptography (pqc) algorit
 
 For more information, visit the [Open Quantum Safe website](https://openquantumsafe.org).
 
-> **Note:** While OpenSSL 3.5.x has added native support for NIST-approved PQC algorithms `liboqs` goes further by also including algorithms currently under evaluation in future NIST standardization rounds. Additionally `liboqs` is not tied to OpenSSL since it provides a standalone C library with bindings for C++, Rust and Python, making it usable across different TLS stacks and applications.
+> **Note:** While OpenSSL 3.5.x has added native support for NIST-approved PQC algorithms `liboqs` goes further by also including algorithms currently under evaluation in future NIST standardization rounds. Additionally `liboqs` is not tied to OpenSSL since it provides a standalone C library with bindings for C++, Rust and Python, making it usable across different applications.
 
 ## Configuration
 
@@ -75,7 +75,7 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 1. Open url: `https://<target-ip>:444`
 2. Accept the self-signed certificate warning
 3. Click the lock icon → **Connection is secure** → **Certificate** to verify the connection details
-4. Open DevTools (`F12`) → **Security** tab to confirm the key exchange is using **X25519MLKEM768**
+4. Open DevTools (`F12`) → **Security** tab to confirm the key exchange is using `X25519MLKEM768`
 
 <p align ="center"><img src=images/chrome.png width=512 height=140 /></p>
 
@@ -168,7 +168,6 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 
 This layer depends on:
 
-- `openembedded-layer` (meta-openembedded)
+- `meta-oe`, `meta-python`, `meta-networking`, `meta-webserver` (from meta-openembedded)
 - `meta-clang` (clang toolchain required by liboqs and liboqs-rust)
 - `meta-lts-mixins` (newer Rust toolchain for Scarthgap)
-- `meta-python`, `meta-networking`, `meta-webserver` (from meta-openembedded)
