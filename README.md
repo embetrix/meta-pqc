@@ -55,9 +55,9 @@ The [`oqs-demos`](recipes-support/oqs-demos) recipe provides ready-to-use demons
 
 For further demo commands (PQC sign/verify, CMS, OpenVPN client, etc.), see the [oqs-demos README](recipes-support/oqs-demos/files/README.md).
 
-### Quick Test: 
+### Quick Test 
 
-#### Hybrid TLS Handshake with Google:
+#### Hybrid TLS Handshake with Google
 
 Google servers already support MLKEM hybrid key exchange. You can verify Hybrid TLS key exchange is working on your target:
 
@@ -68,7 +68,7 @@ Running 10 TLS handshakes for https://google.com:443 ...
 Average TLS handshake: 79.81 ms (10 rounds)
 ```
 
-#### Hybrid TLS with Chrome Browser:
+#### Hybrid TLS with Chrome Browser
 
 Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect from your browser to the target's Nginx hybrid TLS server:
 
@@ -79,24 +79,25 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 
 <p align ="left"><img src=images/chrome.png width=712 height=180 /></p>
 
-#### TLS Benchmark (Classical/Hybrid/PQC):
+#### TLS Benchmark
 
 From the target, benchmark the three Nginx TLS modes using the built-in script:
 
+Classical:
 ```sh
 root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 443 -n100
 Key Exchange: x25519
 Running 100 TLS handshakes for https://localhost:443 ...
 Average TLS handshake: 60.15 ms (100 rounds)
 ```
-
+Hybrid:
 ```sh
 root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 444 -n100
 Key Exchange: X25519MLKEM768
 Running 100 TLS handshakes for https://localhost:444 ...
 Average TLS handshake: 49.03 ms (100 rounds)
 ```
-
+PQC:
 ```sh
 root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 445 -n100
 Key Exchange: mlkem768
