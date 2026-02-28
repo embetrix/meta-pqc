@@ -15,6 +15,29 @@ For more information, visit the [Open Quantum Safe website](https://openquantums
 
 > **Disclaimer:** The OQS project and `liboqs` are **experimental** and should not be used in production environments. The implementations are may contain security vulnerabilities and have not undergone the same level of auditing as established cryptographic libraries. See the [liboqs security policy](https://github.com/open-quantum-safe/liboqs/security) for details.
 
+
+## Software Stack
+
+```
+OpenSSL-based applications:                Non-OpenSSL applications:
+(NGINX / OpenVPN / OpenSSH / curl / …)     (C / C++ / Rust / Python / GO)
+
+              |                                       |
+              v                                       |
+          OpenSSL 3.x                                 |
+              |                                       |
+              v                                       |
+          oqs-provider                                |
+              \                                       /
+               \                                     /
+                v                                   v
+                             liboqs
+                                |
+                                v
+                   PQC algorithms (ML-KEM, ML-DSA, …)
+
+```
+
 ## Configuration
 
 This layer can be integrated in your layer(s) or built standalone using [kas-tool](https://github.com/siemens/kas):
@@ -41,6 +64,7 @@ This layer provides OQS bindings for multiple languages:
 | *C++* | [`liboqs-cpp`](recipes-crypto/liboqs-cpp) | C++ wrapper around liboqs, ships example binaries: `oqs_cpp_rand`, `oqs_cpp_kem`, `oqs_cpp_sig` |
 | *Rust* | [`liboqs-rust`](recipes-crypto/liboqs-rust) | Rust crate with FFI bindings to liboqs (built with clang installs `rlib` artifacts) |
 | *Python* | [`python3-liboqs`](recipes-devtools/python) | Python 3 bindings via CFFI/ctypes, ships example scripts: `oqs_python_rand`, `oqs_python_kem`, `oqs_python_sig` |
+
 
 ## OQS Speed Tests
 
