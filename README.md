@@ -11,7 +11,7 @@ OQS implements the latest [NIST-approved Post-Quantum Cryptography (pqc) algorit
 
 For more information, visit the [Open Quantum Safe website](https://openquantumsafe.org).
 
-> **Note:** While OpenSSL 3.5.x has added native support for NIST-approved PQC algorithms `liboqs` goes further by also including algorithms currently under evaluation in future NIST standardization rounds. Additionally `liboqs` is not tied to OpenSSL since it provides a standalone C library with bindings for C++, Rust and Python, making it usable across different applications.
+> **Note:** While OpenSSL 3.5.x has added native support for NIST-approved PQC algorithms `liboqs` goes further by also including algorithms currently under evaluation in future NIST standardization rounds. Additionally `liboqs` is not tied to OpenSSL since it provides a standalone C library with bindings for C++, Rust and Python making it usable across different applications.
 
 ## Configuration
 
@@ -19,7 +19,7 @@ This layer can be integrated in your layer(s) or built standalone using [kas-too
 
 To Enable `OpenSSL` with oqs support using `oqs-provider` you should set: 
 
-`DISTRO_FEATURES += "oqs"`
+`DISTRO_FEATURES:append = " oqs"`
 
 This will make `OpenSSL` aware of Hybrid/PQC algorithms and set the default TLS group to:
 
@@ -33,10 +33,10 @@ This layer provides OQS bindings for multiple languages:
 
 | Language | Recipe | Description |
 |----------|--------|-------------|
-| **C** | [`liboqs`](recipes-crypto/liboqs) | Core PQC library, includes `oqs_test_*` and `oqs_speed_*` binaries for testing and benchmarking |
-| **C++** | [`liboqs-cpp`](recipes-crypto/liboqs-cpp) | C++ wrapper around liboqs, ships example binaries: `oqs_cpp_rand`, `oqs_cpp_kem`, `oqs_cpp_sig` |
-| **Rust** | [`liboqs-rust`](recipes-crypto/liboqs-rust) | Rust crate with FFI bindings to liboqs (built with clang installs `rlib` artifacts) |
-| **Python** | [`python3-liboqs`](recipes-devtools/python) | Python 3 bindings via CFFI/ctypes, ships example scripts: `oqs_python_rand`, `oqs_python_kem`, `oqs_python_sig` |
+| *C* | [`liboqs`](recipes-crypto/liboqs) | Core PQC library, includes `oqs_test_*` and `oqs_speed_*` binaries for testing and benchmarking |
+| *C++* | [`liboqs-cpp`](recipes-crypto/liboqs-cpp) | C++ wrapper around liboqs, ships example binaries: `oqs_cpp_rand`, `oqs_cpp_kem`, `oqs_cpp_sig` |
+| *Rust* | [`liboqs-rust`](recipes-crypto/liboqs-rust) | Rust crate with FFI bindings to liboqs (built with clang installs `rlib` artifacts) |
+| *Python* | [`python3-liboqs`](recipes-devtools/python) | Python 3 bindings via CFFI/ctypes, ships example scripts: `oqs_python_rand`, `oqs_python_kem`, `oqs_python_sig` |
 
 ## OQS Speed Tests
 
@@ -77,7 +77,7 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 3. Click the lock icon → **Connection is secure** → **Certificate** to verify the connection details
 4. Open DevTools (`F12`) → **Security** tab to confirm the key exchange is using `X25519MLKEM768`
 
-<p align ="center"><img src=images/chrome.png width=512 height=140 /></p>
+<p align ="left"><img src=images/chrome.png width=712 height=180 /></p>
 
 #### TLS Benchmark (Classical/Hybrid/PQC):
 
@@ -148,8 +148,8 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 
 | Machine | BSP Layer |
 |---------|-----------|
-| `qemux86-64` | poky (built-in) |
-| `beaglebone-yocto` | poky (built-in) |
+| `qemux86-64` | poky |
+| `beaglebone-yocto` | poky |
 | `raspberrypi5` | meta-raspberrypi |
 | `raspberrypi4-64` | meta-raspberrypi |
 | `stm32mp157f-dk2` | meta-stm32mp15x |
@@ -160,14 +160,14 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 
 [`liboqs`](recipes-crypto/liboqs) is built with architecture-specific optimizations when available:
 
-- **x86-64**: ADX, AES-NI, AVX, AVX2, BMI1, BMI2, PCLMULQDQ, POPCNT, SSE/SSE2/SSE3
-- **aarch64**: NEON, AES, SHA2, SHA3
-- **Other architectures**: built without hardware-specific optimizations (unsupported architecture mode)
+- *x86-64*: ADX, AES-NI, AVX, AVX2, BMI1, BMI2, PCLMULQDQ, POPCNT, SSE/SSE2/SSE3
+- *aarch64*: NEON, AES, SHA2, SHA3
+- *Others*: built without hardware-specific optimizations (unsupported architecture mode)
 
 ## Layer Dependencies
 
 This layer depends on:
 
 - `meta-oe`, `meta-python`, `meta-networking`, `meta-webserver` (from meta-openembedded)
-- `meta-clang` (clang toolchain required by liboqs and liboqs-rust)
+- `meta-clang` (clang toolchain required by [`liboqs`](recipes-crypto/liboqs) and [`liboqs-rust`](recipes-crypto/liboqs-rust))
 - `meta-lts-mixins` (newer Rust toolchain for Scarthgap)
