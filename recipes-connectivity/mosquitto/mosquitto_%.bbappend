@@ -6,13 +6,11 @@ SRC_URI += "file://restart.conf \
            "
 
 do_install:append() {
-    install -d ${D}${sysconfdir}/mosquitto/conf.d
     echo "include_dir /etc/mosquitto/conf.d" >> ${D}${sysconfdir}/mosquitto/mosquitto.conf
 
     install -d ${D}${systemd_unitdir}/system/mosquitto.service.d
     install -m 0644 ${WORKDIR}/restart.conf ${D}${systemd_unitdir}/system/mosquitto.service.d/
 }
 
-CONFFILES:${PN} += "${sysconfdir}/mosquitto/conf.d "
 
 FILES:${PN} += "${systemd_unitdir}/system/mosquitto.service.d"

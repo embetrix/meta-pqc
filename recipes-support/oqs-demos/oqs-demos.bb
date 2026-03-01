@@ -14,6 +14,9 @@ SRC_URI = " \
            file://openvpn-classical.conf \
            file://openvpn-hybrid.conf \
            file://openvpn-pqc.conf \
+           file://mosquitto-classical.conf \
+           file://mosquitto-hybrid.conf \
+           file://mosquitto-pqc.conf \
            file://device-certs.sh \
            file://device-certs.service \
            file://tls-handshake-bench.sh \
@@ -22,7 +25,7 @@ SRC_URI = " \
 inherit systemd
 
 DEPENDS = "openssl-native oqs-provider-native"
-RDEPENDS:${PN} += "openssl-bin oqs-provider openvpn hostname-setup nginx ca-certificates cpufrequtils"
+RDEPENDS:${PN} += "openssl-bin oqs-provider openvpn hostname-setup nginx ca-certificates mosquitto mosquitto-clients"
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
@@ -44,9 +47,12 @@ do_install () {
     install -d ${D}${bindir}
     install -m 0755 ${WORKDIR}/device-certs.sh       ${D}${bindir}/device-certs
     install -m 0755 ${WORKDIR}/tls-handshake-bench.sh ${D}${bindir}/tls-handshake-bench
-}
 
-FILES:${PN} = "/opt/oqs-demos ${bindir} ${sysconfdir}/nginx/conf.d ${sysconfdir}/openvpn/server ${sysconfdir}/systemd"
+    install -d ${D}${sysconfdir}/mosquitto/conf.d
+    install -m 0644 ${WORKDIR}/mosquitto-classical.conf  ${D}${sysconfdir}/mosquitto/conf.d
+    install -m 0644 ${WORKDIR}/mosquitto-hybrid.conf     ${D}${sysconfdir}/mosquitto/conf.d
+    install -m 0644 ${WORKDIR}/mosquitto-pqc.conf        ${D}${sysconfdir}/mosquitto/conf.d
+}
 
 SYSTEMD_SERVICE:${PN} = "device-certs.service"
 SYSTEMD_PACKAGES = "${PN}"
@@ -64,3 +70,10 @@ do_install:append() {
 	ln -sf ${systemd_unitdir}/system/openvpn-server@.service \
 		${D}${sysconfdir}/systemd/system/multi-user.target.wants/openvpn-server@openvpn-pqc.service
 }
+
+FILES:${PN} = "/opt/oqs-demos ${bindir} \
+              ${sysconfdir}/nginx/conf.d \
+              ${sysconfdir}/openvpn/server \
+              ${sysconfdir}/mosquitto/conf.d \
+              ${sysconfdir}/systemd \
+             "

@@ -2,8 +2,8 @@
 Description=device certificates creation service
 After=network-online.target
 Wants=network-online.target
-Before=nginx.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hybrid.service
-Wants=nginx.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hybrid.service
+Before=nginx.service mosquitto.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hybrid.service
+Wants=nginx.service mosquitto.service openvpn-server@openvpn-pqc.service openvpn-server@openvpn-hybrid.service
 
 [Service]
 Type=oneshot

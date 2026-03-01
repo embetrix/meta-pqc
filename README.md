@@ -19,8 +19,8 @@ For more information, visit the [Open Quantum Safe website](https://openquantums
 ## Architecture Overview
 
 ```
-OpenSSL-based applications:                Non-OpenSSL applications:
-(NGINX / OpenVPN / OpenSSH / curl / …)     (C / C++ / Rust / Python / GO)
+OpenSSL-based applications:                  Non-OpenSSL applications:
+(NGINX / OpenVPN / OpenSSH / curl / MQTT)    (C / C++ / Rust / Python / GO)
 
               |                                       |
               v                                       |
@@ -74,14 +74,15 @@ The [`liboqs`](recipes-crypto/liboqs) recipe builds and installs the `oqs_speed_
 
 The [`oqs-demos`](recipes-support/oqs-demos) recipe provides ready-to-use demonstration configurations for PQC/Hybrid TLS and VPN scenarios:
 
-- **Device certificates**:  [`device-certs`](recipes-support/oqs-demos/files/device-certs.sh) script with a systemd unit that generates device certificates (Classical/PQC) signed by the bundled CAs
-- **Nginx**:  Pre-configured for three modes: classical, hybrid and pure PQC TLS on ports `443`|`444`|`445`
-- **OpenVPN**: Server configurations for classical, hybrid and pure PQC tunnels on ports `1194`|`1195`|`1196`
-- **TLS handshake benchmark**: `tls-handshake-bench` script to measure TLS handshake latency using curl over multiple rounds
+- *`Device certificates`*:  [`device-certs`](recipes-support/oqs-demos/files/device-certs.sh) script with a systemd unit that generates device certificates (Classical/PQC) signed by the bundled CAs
+- *`Nginx`*:  Server configurations for classical, hybrid and pure PQC TLS on ports `443`|`444`|`445`
+- *`OpenVPN`*: Server configurations for classical, hybrid and pure PQC tunnels on ports `1194`|`1195`|`1196` 
+- *`Mosquitto`*: MQTT broker configurations for classical, hybrid and pure PQC TLS on ports `8883`|`8884`|`8885` 
+- *`TLS handshake benchmark`*: [`tls-handshake-bench`](recipes-support/oqs-demos/files/tls-handshake-bench.sh) script to measure TLS handshake latency using curl over multiple rounds
 
-> **Note:** Hybrid and pure PQC key exchange on ports `444`|`445` for Nginx and `1195`|`1196` for OpenVPN require both endpoints to have PQC support enabled. To connect from a host without `oqs-provider`, you can use the [oqs-docker](https://github.com/embetrix/oqs-docker) container as a PQC-enabled client.
+> **Note:** Hybrid and pure PQC key exchange on ports `444`|`445` for Nginx, `1195`|`1196` for OpenVPN and `8884`|`8885` for MQTT require both endpoints to have PQC support enabled. To connect from a host without `oqs-provider`, you can use the [oqs-docker](https://github.com/embetrix/oqs-docker) container as a PQC-enabled client.
 
-For further demo commands (PQC sign/verify, CMS, OpenVPN client) see the [README](recipes-support/oqs-demos/files/README.md).
+For further demo commands (PQC sign/verify, CMS, OpenVPN client, MQTT) see the [README](recipes-support/oqs-demos/files/README.md).
 
 ### Quick Test 
 

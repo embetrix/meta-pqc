@@ -79,6 +79,7 @@ openvpn \
 ```
 
 ## connect to pure PQC key exchange:
+
 ```
 openvpn \
   --client \
@@ -90,4 +91,33 @@ openvpn \
   --key  /opt/oqs-demos/certs/rsa-device-client-key.pem \
   --remote-cert-tls server \
   --verb 5
-  ```
+```
+
+# Mosquitto Broker
+
+## subscribe
+
+```
+mosquitto_sub \
+  -h localhost \
+  -p 8884 \
+  --cafile  /opt/oqs-demos/certs/ca-cert.pem \
+  --cert    /opt/oqs-demos/certs/rsa-device-client-cert.pem \
+  --key     /opt/oqs-demos/certs/rsa-device-client-key.pem \
+  -t test/topic \
+  -d
+```
+
+## publish
+
+```
+mosquitto_pub \
+  -h localhost \
+  -p 8884 \
+  --cafile  /opt/oqs-demos/certs/ca-cert.pem \
+  --cert    /opt/oqs-demos/certs/rsa-device-client-cert.pem \
+  --key     /opt/oqs-demos/certs/rsa-device-client-key.pem \
+  -t test/topic \
+  -m "hello PQC" \
+  -d
+```
