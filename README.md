@@ -52,7 +52,7 @@ This will make `OpenSSL` aware of Hybrid/PQC algorithms and set the default TLS 
 
 Also enables `OpenSSH` with Hybrid and pure PQC key exchange support on top of classical algorithms.
 
-**Recommendation:** Hybrid key exchange such as `X25519MLKEM768` is the recommended approach as PQC algorithms are still maturing. Hybrid combines a classical algorithm (X25519) with a post-quantum one (MLKEM-768) providing the best balance between quantum resistance if PQC hold and classical security as a fallback if it doesn't.
+**Recommendation:** Hybrid key exchange such as `X25519MLKEM768` is the recommended approach as PQC algorithms are still maturing. Hybrid combines a classical algorithm `X25519` with a post-quantum one `MLKEM-768` providing the best balance between quantum resistance if PQC hold and classical security as a fallback if it doesn't.
 
 ## Language Bindings
 
@@ -164,7 +164,7 @@ KAS_MACHINE=raspberrypi5 kas build kas-oqs.yml
 
 ```sh
 sudo bmaptool copy \
-     build/tmp/deploy/images/raspberrypi5/oqs-demo-image-<MACHINE>.rootfs-<VERSION>.wic.bz2 \
+     build/tmp/deploy/images/<MACHINE>/oqs-demo-image-<MACHINE>.rootfs-<VERSION>.wic.bz2 \
      /dev/mmcblk0
 ```
 
