@@ -27,7 +27,7 @@ do_install:append() {
 
     install -d ${D}${sysconfdir}/ssh/sshd_config.d
     # Enable classical/hybrid key-exchange mechanisms
-    echo "KexAlgorithms curve25519-sha256,mlkem768x25519-sha256"     > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
+    echo "KexAlgorithms curve25519-sha256,mlkem768x25519-sha256,mlkem768-sha256"     > ${D}${sysconfdir}/ssh/sshd_config.d/kex.conf
     # Enable PQC type authentication
     echo "PubkeyAcceptedKeyTypes +ssh-mldsa65"   > ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
     echo "HostkeyAlgorithms      +ssh-mldsa65"  >> ${D}${sysconfdir}/ssh/sshd_config.d/pubkey.conf
