@@ -94,3 +94,9 @@ if [ ! -f rsa-device-client-key.pem ] || [ ! -f rsa-device-client-cert.pem ]; th
             -out rsa-device-client-cert.pem \
             -copy_extensions copy  || exit 1
 fi
+
+# Make all .pem files readable by everyone 
+# needed by applications running as non-root users
+# Not really secure but acceptable since these 
+#are self-signed keys/certs for testing purposes only
+chmod 644 *.pem
