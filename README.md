@@ -61,9 +61,10 @@ This layer provides OQS bindings for multiple languages:
 | Language | Recipe | Description |
 |----------|--------|-------------|
 | *C* | [`liboqs`](recipes-crypto/liboqs) | Core PQC library, includes `oqs_test_*` and `oqs_speed_*` binaries for testing and benchmarking |
-| *C++* | [`liboqs-cpp`](recipes-crypto/liboqs-cpp) | C++ wrapper around liboqs, ships example binaries: `oqs_cpp_rand`, `oqs_cpp_kem`, `oqs_cpp_sig` |
-| *Rust* | [`liboqs-rust`](recipes-crypto/liboqs-rust) | Rust crate with FFI bindings to liboqs (built with clang installs `rlib` artifacts) |
-| *Python* | [`python3-liboqs`](recipes-devtools/python) | Python 3 bindings via CFFI/ctypes, ships example scripts: `oqs_python_rand`, `oqs_python_kem`, `oqs_python_sig` |
+| *C++* | [`liboqs-cpp`](recipes-crypto/liboqs-cpp) | C++ bindings, ships example binaries: `oqs_cpp_rand`, `oqs_cpp_kem`, `oqs_cpp_sig` |
+| *GO* | [`liboqs-go`](recipes-crypto/liboqs-go) | GO bindings, ships example binaries: `oqs_go_rand`, `oqs_go_kem`, `oqs_go_sig` |
+| *Python* | [`python3-liboqs`](recipes-devtools/python) | Python 3 bindings, ships example scripts: `oqs_python_rand`, `oqs_python_kem`, `oqs_python_sig` |
+| *Rust* | [`liboqs-rust`](recipes-crypto/liboqs-rust) | Rust crate bindings built with clang ships `rlib` artifacts |
 
 
 ## OQS Speed Tests
