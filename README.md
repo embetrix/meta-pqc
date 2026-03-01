@@ -86,14 +86,43 @@ For further demo commands (PQC sign/verify, CMS, OpenVPN client) see the [README
 
 #### Hybrid TLS Handshake with Google
 
-Google servers already support MLKEM hybrid key exchange. You can verify Hybrid TLS key exchange is working on your target:
+Google servers already support `X25519MLKEM768` hybrid key exchange. You can verify it's working from your target:
 
-```sh
-root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h google.com -p 443 -n10  
-Key Exchange: X25519MLKEM768
-Running 10 TLS handshakes for https://google.com:443 ...
-Average TLS handshake: 79.81 ms (10 rounds)
-```
+<pre>
+root@raspberrypi5-c8-bf-64:~# curl -v https://google.com
+* Host google.com:443 was resolved.
+* IPv4: 142.250.201.78
+*   Trying 142.250.201.78:443...
+* Connected to google.com (142.250.201.78) port 443
+* ALPN: curl offers http/1.1
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: none
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+<mark>* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519MLKEM768 / id-ecPublicKey</mark>
+* ALPN: server accepted http/1.1
+* Server certificate:
+*  subject: CN=*.google.com
+*  start date: Feb  2 08:36:42 2026 GMT
+*  expire date: Apr 27 08:36:41 2026 GMT
+*  subjectAltName: host "google.com" matched cert's "google.com"
+*  issuer: C=US; O=Google Trust Services; CN=WE2
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA384
+*   Certificate level 2: Public key type EC/secp384r1 (384/192 Bits/secBits), signed using ecdsa-with-SHA384
+* using HTTP/1.x
+> GET / HTTP/1.1
+> Host: google.com
+> User-Agent: curl/8.7.1
+> Accept: */*
+</pre>
 
 #### Hybrid TLS with Chrome Browser
 
@@ -134,15 +163,21 @@ Average TLS handshake: 60.87 ms (100 rounds)
 
 > **Note:** MLKEM operations run in microseconds so hybrid KEX adds almost no measurable overhead (~30 µs on raspberrypi5) compared to classical TLS
 
-#### SSH 
+#### SSH
 
-To connect using hybrid PQC key exchange over SSH:
+*Classical:*
+
+```sh
+ssh root@<target-ip> -v
+```
+
+*Hybrid:*
 
 ```sh
 ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
 ```
 
-To connect using pure PQC key exchange over SSH:
+*PQC:*
 
 ```sh
 ssh root@<target-ip> -o KexAlgorithms=mlkem768-sha256 -v
