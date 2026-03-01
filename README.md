@@ -142,6 +142,12 @@ To connect using hybrid PQC key exchange over SSH:
 ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
 ```
 
+To connect using pure PQC key exchange over SSH:
+
+```sh
+ssh root@<target-ip> -o KexAlgorithms=mlkem768-sha256 -v
+```
+
 ## Build
 
 ```sh
