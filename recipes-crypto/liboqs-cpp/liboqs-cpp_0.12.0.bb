@@ -11,7 +11,7 @@ S = "${WORKDIR}/git"
 
 inherit pkgconfig cmake
 
-DEPENDS = "openssl liboqs"
+DEPENDS = "liboqs"
 
 do_compile:append () {
     ${CMAKE_VERBOSE} cmake --build '${B}' --target examples -- ${EXTRA_OECMAKE_BUILD}
