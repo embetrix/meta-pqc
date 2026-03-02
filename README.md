@@ -19,23 +19,32 @@ For more information, visit the [Open Quantum Safe website](https://openquantums
 ## Architecture Overview
 
 ```
-OpenSSL-based applications:                  Non-OpenSSL applications:
-(NGINX / OpenVPN / OpenSSH / curl / MQTT)    (C / C++ / Rust / Python / GO)
-
-              |                                       |
-              v                                       |
-          OpenSSL 3.x                                 |
-              |                                       |
-              v                                       |
-          oqs-provider                                |
-              \                                       /
-               \                                     /
-                v                                   v
-                             liboqs
-                                |
-                                v
-                   PQC algorithms (ML-KEM, ML-DSA, …)
-
+    +-------------------------------+        +--------------------------------+
+    |  OpenSSL-based Applications   |        |    Non-OpenSSL Applications    |
+    | (NGINX, OpenSSH, curl, MQTT)  |        | (C, C++, Rust, Python, Go...)  |
+    +---------------+---------------+        +---------------+----------------+
+                    |                                        |
+                    v                                        |
+            +---------------+                                |
+            |  OpenSSL 3.x  |                                |
+            +-------+-------+                                |
+                    |                                        |
+                    v                                        |
+            +---------------+                                |
+            | oqs-provider  |                                |
+            +-------+-------+                                |
+                    |                                        |
+                    +-----------------+    +-----------------+
+                                      |    |
+                                      v    v
+                                +----------------+
+                                |     liboqs     |
+                                +-------+--------+
+                                        |
+                                        v
+                                +----------------+
+                                | PQC Algorithms |
+                                +----------------+
 ```
 
 ## Configuration
