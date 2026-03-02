@@ -79,12 +79,12 @@ The [`oqs-demos`](recipes-support/oqs-demos) recipe provides ready-to-use demons
 - *`Nginx`*:  Server configurations for classical, hybrid and pure PQC TLS on ports `443`|`444`|`445`
 - *`OpenVPN`*: Server configurations for classical, hybrid and pure PQC tunnels on ports `1194`|`1195`|`1196` 
 - *`Mosquitto`*: MQTT broker configurations for classical, hybrid and pure PQC TLS on ports `8883`|`8884`|`8885` 
-- *`Hostname Setup`*: Automatically sets a unique hostname on first boot ensuring distinct identities for fleets of devices.
+- *`Hostname Setup`*: Automatically sets a unique hostname on boot based on MAC address ensuring distinct identities for fleets of devices.
 - *`TLS handshake benchmark`*: [`tls-handshake-bench`](recipes-support/oqs-demos/files/tls-handshake-bench.sh) script to measure TLS handshake latency using curl over multiple rounds
 
 > **Note:** Hybrid and pure PQC key exchange on ports `444`|`445` for Nginx, `1195`|`1196` for OpenVPN and `8884`|`8885` for MQTT require both endpoints to have PQC support enabled. To connect from a host without `oqs-provider`, you can use the [oqs-docker](https://github.com/embetrix/oqs-docker) container as a PQC-enabled client.
 
-For further demo commands (PQC sign/verify, CMS, OpenVPN client, MQTT) see the [README](recipes-support/oqs-demos/files/README.md).
+For further demo commands (PQC Signature, Curl, SSH, OpenVPN, MQTT) see the [GUIDES](GUIDES.md).
 
 ### Quick Test 
 
@@ -138,54 +138,6 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 4. Open DevTools (`F12`) → **Security** tab to confirm the key exchange is using `X25519MLKEM768`
 
 <p align ="left"><img src=images/chrome.png width=712 height=180 /></p>
-
-#### TLS Benchmark
-
-From the target, benchmark the three Nginx TLS modes using the built-in script:
-
-*Classical:*
-```sh
-root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 443 -n100
-Key Exchange: x25519
-Running 100 TLS handshakes for https://localhost:443 ...
-Average TLS handshake: 60.15 ms (100 rounds)
-```
-*Hybrid:*
-```sh
-root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 444 -n100
-Key Exchange: X25519MLKEM768
-Running 100 TLS handshakes for https://localhost:444 ...
-Average TLS handshake: 49.03 ms (100 rounds)
-```
-*PQC:*
-```sh
-root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 445 -n100
-Key Exchange: mlkem768
-Running 100 TLS handshakes for https://localhost:445 ...
-Average TLS handshake: 60.87 ms (100 rounds)
-```
-
-> **Note:** MLKEM operations run in microseconds so hybrid KEX adds almost no measurable overhead (~30 µs on raspberrypi5) compared to classical TLS
-
-#### SSH
-
-*Classical:*
-
-```sh
-ssh root@<target-ip> -v
-```
-
-*Hybrid:*
-
-```sh
-ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
-```
-
-*PQC:*
-
-```sh
-ssh root@<target-ip> -o KexAlgorithms=mlkem768-sha256 -v
-```
 
 ## Build
 

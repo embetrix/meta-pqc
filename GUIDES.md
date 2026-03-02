@@ -4,7 +4,7 @@ This document contains commands and examples for generating keys, testing TLS co
 
 ---
 
-## 🔐 Root CA Generation
+## Root CA Generation
 
 Commands used to generate the bundled Root CA certificates and keys.
 
@@ -28,37 +28,7 @@ openssl req -x509 -new -newkey rsa:4096 \
 
 ---
 
-## 🌐 TLS Connection Testing (NGINX)
-
-Test the different NGINX server configurations using `curl`.
-
-| Type | Port | Description |
-|------|------|-------------|
-| **Classical** | `443` | Standard TLS  |
-| **Hybrid** | `444` | Post-Quantum Hybrid (X25519 + ML-KEM) |
-| **PQC** | `445` | Pure Post-Quantum (ML-KEM) |
-
-### 1. Classical TLS (Port 443)
-
-```bash
-curl -v https://localhost:443
-```
-
-### 2. PQC Hybrid TLS (Port 444)
-
-```bash
-curl -v https://localhost:444
-```
-
-### 3. Pure PQC TLS (Port 445)
-
-```bash
-curl -v https://localhost:445
-```
-
----
-
-## ✍️ Digital Signatures (ML-DSA)
+## Digital Signatures (ML-DSA)
 
 ### Sign & Verify Message
 
@@ -102,7 +72,41 @@ openssl cms -verify \
 
 ---
 
-## 🛡️ OpenVPN
+## TLS Connection Testing (NGINX)
+
+Test the different NGINX server configurations using `curl`.
+
+> **Note:** The examples below use `localhost` for running on the device itself. To connect from a different machine, replace `localhost` with the target device's IP address or hostname.
+
+| Type | Port | Description |
+|------|------|-------------|
+| **Classical** | `443` | Standard TLS  |
+| **Hybrid** | `444` | Post-Quantum Hybrid (X25519 + ML-KEM) |
+| **PQC** | `445` | Pure Post-Quantum (ML-KEM) |
+
+### 1. Classical TLS (Port 443)
+
+```bash
+curl -v https://localhost:443
+```
+
+### 2. PQC Hybrid TLS (Port 444)
+
+```bash
+curl -v https://localhost:444
+```
+
+### 3. Pure PQC TLS (Port 445)
+
+```bash
+curl -v https://localhost:445
+```
+
+---
+
+## OpenVPN
+
+> **Note:** The examples below using `--remote localhost` are for loopback testing on the device. To connect a real client, replace `localhost` with the server's IP address or hostname.
 
 Connect to the OpenVPN server using different key exchange methods.
 
@@ -151,7 +155,9 @@ openvpn \
 
 ---
 
-## 📡 Mosquitto Broker (MQTT)
+## Mosquitto Broker (MQTT)
+
+> **Note:** The examples below use `-h localhost` to connect locally. To connect from a remote publisher/subscriber, replace `localhost` with the broker's IP address or hostname.
 
 Test MQTT messaging across different security levels.
 
@@ -219,5 +225,66 @@ mosquitto_pub -h localhost -p 8885 \
   --cert /opt/oqs-demos/certs/rsa-device-client-cert.pem \
   --key /opt/oqs-demos/certs/rsa-device-client-key.pem \
   -t test/topic -m "hello Pure PQC" -d
+```
+
+---
+
+## TLS Benchmark
+
+From the target, benchmark the three Nginx TLS modes using the built-in script:
+
+> **Note:** The examples below use `-h localhost` to run the benchmark locally on the device. To benchmark a remote target, replace `localhost` with the target's IP address or hostname.
+
+### 1. Classical
+
+```bash
+root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 443 -n100
+Key Exchange: x25519
+Running 100 TLS handshakes for https://localhost:443 ...
+Average TLS handshake: 60.15 ms (100 rounds)
+```
+
+### 2. Hybrid
+
+```bash
+root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 444 -n100
+Key Exchange: X25519MLKEM768
+Running 100 TLS handshakes for https://localhost:444 ...
+Average TLS handshake: 49.03 ms (100 rounds)
+```
+
+### 3. PQC
+
+```bash
+root@raspberrypi5-c8-bf-64:~# tls-handshake-bench -h localhost -p 445 -n100
+Key Exchange: mlkem768
+Running 100 TLS handshakes for https://localhost:445 ...
+Average TLS handshake: 60.87 ms (100 rounds)
+```
+
+> **Note:** MLKEM operations run in microseconds so hybrid KEX adds almost no measurable overhead (~30 µs on raspberrypi5) compared to classical TLS
+
+---
+
+## SSH
+
+Connect using different Key Exchange Algorithms (KEX).
+
+### 1. Classical
+
+```bash
+ssh root@<target-ip> -v
+```
+
+### 2. Hybrid
+
+```bash
+ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
+```
+
+### 3. PQC
+
+```bash
+ssh root@<target-ip> -o KexAlgorithms=mlkem768-sha256 -v
 ```
 
