@@ -50,7 +50,7 @@ This will make `OpenSSL` aware of Hybrid/PQC algorithms and set the default TLS 
 
   `X25519MLKEM768:mlkem768:x25519:prime256v1:x448:secp521r1:secp384r1`
 
-Also enables `OpenSSH` with Hybrid and pure PQC key exchange support on top of classical algorithms.
+Also enables `OpenSSH` (fork from [open-quantum-safe/openssh](https://github.com/open-quantum-safe/openssh)) with Hybrid and pure PQC key exchange support on top of classical algorithms.
 
 **Recommendation:** Hybrid key exchange such as `X25519MLKEM768` is the recommended approach as PQC algorithms are still maturing. Hybrid combines a classical algorithm `X25519` with a post-quantum one `MLKEM-768` providing the best balance between quantum resistance if PQC hold and classical security as a fallback if it doesn't.
 
@@ -74,10 +74,12 @@ The [`liboqs`](recipes-crypto/liboqs) recipe builds and installs the `oqs_speed_
 
 The [`oqs-demos`](recipes-support/oqs-demos) recipe provides ready-to-use demonstration configurations for PQC/Hybrid TLS and VPN scenarios:
 
-- *`Device certificates`*:  [`device-certs`](recipes-support/oqs-demos/files/device-certs.sh) script with a systemd unit that generates device certificates (Classical/PQC) signed by the bundled CAs
+- *`Device certificates`*:  [`device-certs`](recipes-support/oqs-demos/files/device-certs.sh) script with a systemd unit that generates device certificates (Classical/PQC) signed by the bundled CAs.
+  > **Warning:** The bundled Root CA keys (`ca-key.pem`, `pqc-ca-key.pem`) are public and part of the demo. **not** to use them for production !
 - *`Nginx`*:  Server configurations for classical, hybrid and pure PQC TLS on ports `443`|`444`|`445`
 - *`OpenVPN`*: Server configurations for classical, hybrid and pure PQC tunnels on ports `1194`|`1195`|`1196` 
 - *`Mosquitto`*: MQTT broker configurations for classical, hybrid and pure PQC TLS on ports `8883`|`8884`|`8885` 
+- *`Hostname Setup`*: Automatically sets a unique hostname on first boot ensuring distinct identities for fleets of devices.
 - *`TLS handshake benchmark`*: [`tls-handshake-bench`](recipes-support/oqs-demos/files/tls-handshake-bench.sh) script to measure TLS handshake latency using curl over multiple rounds
 
 > **Note:** Hybrid and pure PQC key exchange on ports `444`|`445` for Nginx, `1195`|`1196` for OpenVPN and `8884`|`8885` for MQTT require both endpoints to have PQC support enabled. To connect from a host without `oqs-provider`, you can use the [oqs-docker](https://github.com/embetrix/oqs-docker) container as a PQC-enabled client.
