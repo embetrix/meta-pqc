@@ -110,6 +110,12 @@ curl -v https://localhost:445
 
 Connect to the OpenVPN server using different key exchange methods.
 
+| Type | Port | Description |
+|------|------|-------------|
+| **Classical** | `1194` | Standard TLS  |
+| **Hybrid** | `1195` | Post-Quantum Hybrid (X25519 + ML-KEM) |
+| **PQC** | `1196` | Pure Post-Quantum (ML-KEM) |
+
 ### 1. Classical Key Exchange (Port 1194)
 
 ```bash
@@ -229,6 +235,29 @@ mosquitto_pub -h localhost -p 8885 \
 
 ---
 
+## SSH
+
+Connect using different Key Exchange Algorithms (KEX).
+
+### 1. Classical
+
+```bash
+ssh root@<target-ip> -v
+```
+
+### 2. Hybrid
+
+```bash
+ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
+```
+
+### 3. PQC
+
+```bash
+ssh root@<target-ip> -o KexAlgorithms=mlkem768-sha256 -v
+```
+---
+
 ## TLS Benchmark
 
 From the target, benchmark the three Nginx TLS modes using the built-in script:
@@ -266,25 +295,52 @@ Average TLS handshake: 60.87 ms (100 rounds)
 
 ---
 
-## SSH
-
-Connect using different Key Exchange Algorithms (KEX).
+## OpenSSL Speed
 
 ### 1. Classical
 
 ```bash
-ssh root@<target-ip> -v
+root@raspberrypi5-c8-bf-64:~# openssl speed ecdhx25519
+Doing 253 bits  ecdh ops for 10s: 60366 253-bits ECDH ops in 10.00s
+version: 3.2.6
+built on: Tue Sep 30 13:05:05 2025 UTC
+options: bn(64,64)
+compiler: aarch64-poky-linux-gcc  -mcpu=cortex-a76+crypto -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=recipe-sysroot -O2 -pipe -g -feliminate-unused-debug-types -fcanon-prefix-map  -fmacro-prefix-map=  -fdebug-prefix-map=  -fmacro-prefix-map=  -fdebug-prefix-map=  -fdebug-prefix-map=  -fmacro-prefix-map=  -fdebug-prefix-map=  -DOPENSSL_USE_NODELETE -DOPENSSL_PIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG
+CPUINFO: OPENSSL_armcap=0xbd
+                              op      op/s
+ 253 bits ecdh (X25519)   0.0002s   6036.6
 ```
+
 
 ### 2. Hybrid
 
 ```bash
-ssh root@<target-ip> -o KexAlgorithms=mlkem768x25519-sha256 -v
+root@raspberrypi5-c8-bf-64:~# openssl speed X25519MLKEM768
+Doing X25519MLKEM768 keygen ops for 10s: 98080 X25519MLKEM768 KEM keygen ops in 9.95s
+Doing X25519MLKEM768 encaps ops for 10s: 37174 X25519MLKEM768 KEM encaps ops in 9.97s
+Doing X25519MLKEM768 decaps ops for 10s: 36587 X25519MLKEM768 KEM decaps ops in 10.00s
+version: 3.2.6
+built on: Tue Sep 30 13:05:05 2025 UTC
+options: bn(64,64)
+compiler: aarch64-poky-linux-gcc  -mcpu=cortex-a76+crypto -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=recipe-sysroot -O2 -pipe -g -feliminate-unused-debug-types -fcanon-prefix-map  -fmacro-prefix-map=  -fdebug-prefix-map=  -fmacro-prefix-map=  -fdebug-prefix-map=  -fdebug-prefix-map=  -fmacro-prefix-map=  -fdebug-prefix-map=  -DOPENSSL_USE_NODELETE -DOPENSSL_PIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG
+CPUINFO: OPENSSL_armcap=0xbd
+                               keygen    encaps    decaps keygens/s  encaps/s  decaps/s
+             X25519MLKEM768 0.000101s 0.000268s 0.000273s    9857.3    3728.6    3658.7
 ```
 
 ### 3. PQC
-
 ```bash
-ssh root@<target-ip> -o KexAlgorithms=mlkem768-sha256 -v
+root@raspberrypi5-c8-bf-64:~# openssl speed mlkem768
+Doing mlkem768 keygen ops for 10s: 287919 mlkem768 KEM keygen ops in 9.94s
+Doing mlkem768 encaps ops for 10s: 296703 mlkem768 KEM encaps ops in 9.94s
+Doing mlkem768 decaps ops for 10s: 253984 mlkem768 KEM decaps ops in 10.00s
+version: 3.2.6
+built on: Tue Sep 30 13:05:05 2025 UTC
+options: bn(64,64)
+compiler: aarch64-poky-linux-gcc  -mcpu=cortex-a76+crypto -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=recipe-sysroot -O2 -pipe -g -feliminate-unused-debug-types -fcanon-prefix-map  -fmacro-prefix-map=  -fdebug-prefix-map=  -fmacro-prefix-map=  -fdebug-prefix-map=  -fdebug-prefix-map=  -fmacro-prefix-map=  -fdebug-prefix-map=  -DOPENSSL_USE_NODELETE -DOPENSSL_PIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG
+CPUINFO: OPENSSL_armcap=0xbd
+                               keygen    encaps    decaps keygens/s  encaps/s  decaps/s
+                   mlkem768 0.000035s 0.000034s 0.000039s   28965.7   29849.4   25398.4
 ```
+
 

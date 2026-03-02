@@ -144,7 +144,7 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 1. Open url: `https://<target-ip>:444`
 2. Accept the self-signed certificate warning
 3. Click the lock icon → **Connection is secure** → **Certificate** to verify the connection details
-4. Open DevTools (`F12`) → **Security** tab to confirm the key exchange is using `X25519MLKEM768`
+4. Open DevTools (`F12`) → **Security** tab to confirm the used key exchange:
 
 <p align ="left"><img src=images/chrome.png width=712 height=180 /></p>
 
@@ -195,7 +195,7 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 | `raspberrypi5` | meta-raspberrypi |
 | `raspberrypi4-64` | meta-raspberrypi |
 | `stm32mp157f-dk2` | meta-stm32mp15x |
-| `imx8mq-phanbell` | meta-freescale / meta-coral-ai |
+| `imx8mq-phanbell` | meta-coral-ai |
 | `wandboard` | meta-freescale-3rdparty |
 
 ## Layer Dependencies
@@ -203,5 +203,5 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 This layer depends on:
 
 - `meta-oe`, `meta-python`, `meta-networking`, `meta-webserver` (from meta-openembedded)
-- `meta-clang` (clang toolchain required by [`liboqs`](recipes-crypto/liboqs) and [`liboqs-rust`](recipes-crypto/liboqs-rust))
-- `meta-lts-mixins` (newer Rust toolchain for Scarthgap)
+- `meta-clang` (clang toolchain)
+- `meta-lts-mixins` (newer Rust toolchain for scarthgap)
