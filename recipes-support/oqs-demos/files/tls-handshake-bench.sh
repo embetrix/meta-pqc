@@ -58,6 +58,6 @@ if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]; then
 fi
 
 for i in $(seq 1 "$ROUNDS"); do
-    curl -o /dev/null -s --connect-timeout "$TIMEOUT" $INSECURE \
+    curl --curves "$KEX" -o /dev/null -s --connect-timeout "$TIMEOUT" $INSECURE \
          -w "%{time_appconnect}\n" "https://${HOST}:${PORT}"
 done | awk '{sum+=$1} END {printf "Average TLS handshake: %.2f ms (%d rounds)\n", (sum/NR)*1000, NR}'
