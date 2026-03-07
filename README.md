@@ -168,6 +168,8 @@ KAS_MACHINE=raspberrypi5 kas build kas-oqs.yml
 
 ## Prepare SDCard
 
+Flash image on a SD Card using [bmap-tool](https://github.com/yoctoproject/bmaptool):
+
 ```sh
 sudo bmaptool copy \
      build/tmp/deploy/images/<MACHINE>/oqs-demo-image-<MACHINE>.rootfs-<VERSION>.wic.bz2 \
