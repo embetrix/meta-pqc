@@ -188,15 +188,15 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 
 ## Tested Machines
 
-| Machine | BSP Layer |
-|---------|-----------|
-| `qemux86-64` | poky |
-| `beaglebone-yocto` | poky |
-| `raspberrypi5` | meta-raspberrypi |
-| `raspberrypi4-64` | meta-raspberrypi |
-| `stm32mp157f-dk2` | meta-stm32mp15x |
-| `imx8mq-phanbell` | meta-coral-ai |
-| `wandboard` | meta-freescale-3rdparty |
+| Machine | BSP Layer | CPU | Core | Arch | PQC Optimized |
+|---------|-----------|-----|------|------|:----------------:|
+| `qemux86-64` | poky | Generic x86-64 | core2 | x86_64 | Yes |
+| `beaglebone-yocto` | poky | TI AM335x | Cortex-A8 | ARMv7 | No |
+| `raspberrypi5` | meta-raspberrypi | BCM2712 | Cortex-A76 | AArch64 | Yes |
+| `raspberrypi4-64` | meta-raspberrypi | BCM2711 | Cortex-A72 | AArch64 | Yes |
+| `stm32mp157f-dk2` | meta-stm32mp15x | STM32MP157F | Cortex-A7 | ARMv7 | No |
+| `imx8mq-phanbell` | meta-coral-ai | NXP i.MX 8M Quad | Cortex-A53 | AArch64 | Yes |
+| `wandboard` | meta-freescale-3rdparty | NXP i.MX 6 | Cortex-A9 | ARMv7 | No |
 
 ## Layer Dependencies
 
