@@ -192,13 +192,15 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 
 | Machine | BSP Layer | CPU | Core | Arch | PQC Optimized |
 |---------|-----------|-----|------|------|:----------------:|
-| `qemux86-64` | poky | Generic x86-64 | core2 | x86_64 | Yes |
-| `beaglebone-yocto` | poky | TI AM335x | Cortex-A8 | ARMv7 | No |
-| `raspberrypi5` | meta-raspberrypi | BCM2712 | Cortex-A76 | AArch64 | Yes |
-| `raspberrypi4-64` | meta-raspberrypi | BCM2711 | Cortex-A72 | AArch64 | Yes |
-| `stm32mp157f-dk2` | meta-stm32mp15x | STM32MP157F | Cortex-A7 | ARMv7 | No |
-| `imx8mq-phanbell` | meta-coral-ai | NXP i.MX 8M Quad | Cortex-A53 | AArch64 | Yes |
-| `wandboard` | meta-freescale-3rdparty | NXP i.MX 6 | Cortex-A9 | ARMv7 | No |
+| `qemux86-64` | [poky](https://git.yoctoproject.org/poky/log/?h=scarthgap) | Generic x86-64 | core2 | x86_64 | Yes |
+| `beaglebone-yocto` | [poky](https://git.yoctoproject.org/poky/log/?h=scarthgap) | TI AM335x | Cortex-A8 | ARMv7 | No |
+| `raspberrypi5` | [meta-raspberrypi](https://github.com/agherzan/meta-raspberrypi/tree/scarthgap) | BCM2712 | Cortex-A76 | AArch64 | Yes |
+| `raspberrypi4-64` | [meta-raspberrypi](https://github.com/agherzan/meta-raspberrypi/tree/scarthgap) | BCM2711 | Cortex-A72 | AArch64 | Yes |
+| `stm32mp157f-dk2` | [meta-stm32mp15x](https://github.com/embetrix/meta-stm32mp15x/tree/scarthgap) | STM32MP157F | Cortex-A7 | ARMv7 | No |
+| `imx8mq-phanbell` | [meta-coral-ai](https://github.com/embetrix/meta-coral-ai/tree/scarthgap) | NXP i.MX 8M Quad | Cortex-A53 | AArch64 | Yes |
+| `wandboard` | [meta-freescale-3rdparty](https://github.com/Freescale/meta-freescale-3rdparty/tree/scarthgap) | NXP i.MX 6 | Cortex-A9 | ARMv7 | No |
+
+> **Note:** *PQC Optimized* indicates whether `liboqs` is built with architecture-specific optimizations: AVX/SSE/AES-NI on x86_64 and NEON/AES/SHA2/SHA3 on AArch64. Other targets use generic software (non-optimized) implementations.
 
 ## Layer Dependencies
 
