@@ -150,11 +150,13 @@ Chrome natively supports `X25519MLKEM768` hybrid key exchange. You can connect f
 
 ## Build
 
+Using [kas](https://kas.readthedocs.io/en/latest/userguide/getting-started.html):
+
 ```sh
 KAS_MACHINE=<MACHINE> kas build kas-oqs.yml
 ```
 
-or using kas docker container:
+or using [kas-container](https://kas.readthedocs.io/en/latest/userguide/kas-container.html#building-in-a-container) (requires [Docker](https://docs.docker.com/engine/install/)):
 
 ```sh
 KAS_MACHINE=<MACHINE> kas-container build kas-oqs.yml
@@ -164,6 +166,12 @@ for example:
 
 ```sh
 KAS_MACHINE=raspberrypi5 kas build kas-oqs.yml
+```
+
+or
+
+```sh
+KAS_MACHINE=raspberrypi5 kas-container build kas-oqs.yml
 ```
 
 ## Prepare SDCard
