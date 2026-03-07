@@ -204,6 +204,6 @@ KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nograph
 
 This layer depends on:
 
-- `meta-oe`, `meta-python`, `meta-networking`, `meta-webserver` (from meta-openembedded)
-- `meta-clang` (clang toolchain)
-- `meta-lts-mixins` (newer Rust toolchain for scarthgap)
+- [`meta-openembedded`](https://github.com/openembedded/meta-openembedded/tree/scarthgap) (`meta-oe`, `meta-python`, `meta-networking`, `meta-webserver`)
+- [`meta-clang`](https://github.com/kraj/meta-clang/tree/scarthgap) (clang toolchain)
+- [`meta-lts-mixins`](https://git.yoctoproject.org/meta-lts-mixins/log/?h=scarthgap/rust) (newer Rust toolchain for scarthgap)
