@@ -26,3 +26,8 @@ IMAGE_INSTALL += "\
     liboqs-rust \
     oqs-demos \
     "
+
+IMAGE_INSTALL += "\
+    leancrypto-apps \
+    leancrypto-tests \
+    "
