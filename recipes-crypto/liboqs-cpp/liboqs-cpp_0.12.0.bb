@@ -7,8 +7,6 @@ SRC_URI = "git://github.com/open-quantum-safe/liboqs-cpp.git;branch=main;protoco
 # SRCREV tagged 0.12.0
 SRCREV = "7e293be10a2c5978afdbf6eaba1b0bf5056e530a"
 
-S = "${WORKDIR}/git"
-
 inherit pkgconfig cmake
 
 DEPENDS = "liboqs"

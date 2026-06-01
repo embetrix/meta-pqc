@@ -16,8 +16,8 @@ SRC_URI = "git://github.com/open-quantum-safe/openssh.git;branch=OQS-v9;protocol
            "
 
 SRCREV = "a55575abb72193e244c653e18ff2b9ef68cf9956"
-S = "${WORKDIR}/git"
 PV = "v9.7-oqs-snapshot-2025-05"
+LIC_FILES_CHKSUM = "file://LICENCE;md5=072979064e691d342002f43cd89c0394"
 
 DEPENDS += "liboqs"
 

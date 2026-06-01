@@ -13,7 +13,7 @@ SYSTEMD_PACKAGES = "${PN}"
 do_install() {
 
 	install -d ${D}${bindir}
-	install -m 0755 ${WORKDIR}/hostname-setup.sh ${D}${bindir}/hostname-setup
+	install -m 0755 ${UNPACKDIR}/hostname-setup.sh ${D}${bindir}/hostname-setup
 	install -d ${D}${systemd_unitdir}/system
-	install -m 0644 ${WORKDIR}/hostname-setup.service ${D}${systemd_unitdir}/system/
+	install -m 0644 ${UNPACKDIR}/hostname-setup.service ${D}${systemd_unitdir}/system/
 }

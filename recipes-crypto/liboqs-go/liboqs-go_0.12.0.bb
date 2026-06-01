@@ -7,8 +7,6 @@ SRC_URI = "git://github.com/open-quantum-safe/liboqs-go.git;branch=main;protocol
 # SRCREV tagged 0.12.0
 SRCREV = "eeb454f5d03ad474c6c353a11fab587c6029ac5c"
 
-S = "${WORKDIR}/git"
-
 inherit go-mod pkgconfig
 
 GO_IMPORT = "github.com/open-quantum-safe/liboqs-go"
