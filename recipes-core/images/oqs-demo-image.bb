@@ -23,7 +23,6 @@ IMAGE_INSTALL += "\
     liboqs-cpp-examples \
     liboqs-go-examples \
     python3-liboqs-examples \
-    liboqs-rust \
     oqs-demos \
     "
 
