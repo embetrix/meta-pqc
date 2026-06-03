@@ -7,8 +7,6 @@ SRC_URI = "git://github.com/sharkdp/hyperfine.git;branch=master;protocol=https"
 # SRCREV tagged 1.18.0
 SRCREV = "24a0d5da1bff11567bbf307315d11cb0e10733ec"
 
-S = "${WORKDIR}/git"
-
 inherit cargo cargo-update-recipe-crates
 
 require ${BPN}-crates.inc

@@ -7,8 +7,6 @@ SRC_URI = "gitsm://github.com/open-quantum-safe/liboqs-rust.git;branch=main;prot
 # SRCREV tagged 0.10.1
 SRCREV = "d1fead1c5428fad3be89164297948a771c0d6752"
 
-S = "${WORKDIR}/git"
-
 inherit cargo cargo-update-recipe-crates
 
 TOOLCHAIN = "clang"

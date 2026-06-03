@@ -29,29 +29,29 @@ RDEPENDS:${PN} += "openssl-bin oqs-provider openvpn hostname-setup nginx ca-cert
 
 do_install () {
     install -d ${D}/opt/oqs-demos/certs
-    install -m 0644 ${WORKDIR}/ca-cert.pem  ${D}/opt/oqs-demos/certs
-    install -m 0644 ${WORKDIR}/ca-key.pem   ${D}/opt/oqs-demos/certs
-    install -m 0644 ${WORKDIR}/pqc-ca-cert.pem  ${D}/opt/oqs-demos/certs
-    install -m 0644 ${WORKDIR}/pqc-ca-key.pem   ${D}/opt/oqs-demos/certs
+    install -m 0644 ${UNPACKDIR}/ca-cert.pem  ${D}/opt/oqs-demos/certs
+    install -m 0644 ${UNPACKDIR}/ca-key.pem   ${D}/opt/oqs-demos/certs
+    install -m 0644 ${UNPACKDIR}/pqc-ca-cert.pem  ${D}/opt/oqs-demos/certs
+    install -m 0644 ${UNPACKDIR}/pqc-ca-key.pem   ${D}/opt/oqs-demos/certs
    
     install -d ${D}${sysconfdir}/nginx/conf.d
-    install -m 0644 ${WORKDIR}/nginx-classical.conf ${D}${sysconfdir}/nginx/conf.d/nginx-classical.conf
-    install -m 0644 ${WORKDIR}/nginx-hybrid.conf ${D}${sysconfdir}/nginx/conf.d/nginx-hybrid.conf
-    install -m 0644 ${WORKDIR}/nginx-pqc.conf ${D}${sysconfdir}/nginx/conf.d/nginx-pqc.conf
+    install -m 0644 ${UNPACKDIR}/nginx-classical.conf ${D}${sysconfdir}/nginx/conf.d/nginx-classical.conf
+    install -m 0644 ${UNPACKDIR}/nginx-hybrid.conf ${D}${sysconfdir}/nginx/conf.d/nginx-hybrid.conf
+    install -m 0644 ${UNPACKDIR}/nginx-pqc.conf ${D}${sysconfdir}/nginx/conf.d/nginx-pqc.conf
 
     install -d ${D}${sysconfdir}/openvpn/server
-    install -m 0644 ${WORKDIR}/openvpn-classical.conf ${D}${sysconfdir}/openvpn/server/openvpn-classical.conf
-    install -m 0644 ${WORKDIR}/openvpn-hybrid.conf ${D}${sysconfdir}/openvpn/server/openvpn-hybrid.conf
-    install -m 0644 ${WORKDIR}/openvpn-pqc.conf ${D}${sysconfdir}/openvpn/server/openvpn-pqc.conf
+    install -m 0644 ${UNPACKDIR}/openvpn-classical.conf ${D}${sysconfdir}/openvpn/server/openvpn-classical.conf
+    install -m 0644 ${UNPACKDIR}/openvpn-hybrid.conf ${D}${sysconfdir}/openvpn/server/openvpn-hybrid.conf
+    install -m 0644 ${UNPACKDIR}/openvpn-pqc.conf ${D}${sysconfdir}/openvpn/server/openvpn-pqc.conf
 
     install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/device-certs.sh       ${D}${bindir}/device-certs
-    install -m 0755 ${WORKDIR}/tls-handshake-bench.sh ${D}${bindir}/tls-handshake-bench
+    install -m 0755 ${UNPACKDIR}/device-certs.sh       ${D}${bindir}/device-certs
+    install -m 0755 ${UNPACKDIR}/tls-handshake-bench.sh ${D}${bindir}/tls-handshake-bench
 
     install -d ${D}${sysconfdir}/mosquitto/conf.d
-    install -m 0644 ${WORKDIR}/mosquitto-classical.conf  ${D}${sysconfdir}/mosquitto/conf.d
-    install -m 0644 ${WORKDIR}/mosquitto-hybrid.conf     ${D}${sysconfdir}/mosquitto/conf.d
-    install -m 0644 ${WORKDIR}/mosquitto-pqc.conf        ${D}${sysconfdir}/mosquitto/conf.d
+    install -m 0644 ${UNPACKDIR}/mosquitto-classical.conf  ${D}${sysconfdir}/mosquitto/conf.d
+    install -m 0644 ${UNPACKDIR}/mosquitto-hybrid.conf     ${D}${sysconfdir}/mosquitto/conf.d
+    install -m 0644 ${UNPACKDIR}/mosquitto-pqc.conf        ${D}${sysconfdir}/mosquitto/conf.d
 }
 
 SYSTEMD_SERVICE:${PN} = "device-certs.service"
@@ -59,7 +59,7 @@ SYSTEMD_PACKAGES = "${PN}"
 
 do_install:append() {
 	install -d ${D}${systemd_unitdir}/system
-	install -m 0644 ${WORKDIR}/device-certs.service ${D}${systemd_unitdir}/system/
+	install -m 0644 ${UNPACKDIR}/device-certs.service ${D}${systemd_unitdir}/system/
 
 	# Enable units template instances provided by openvpn
     install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants

@@ -3,120 +3,80 @@ From: Ayoub Zaki <ayoub.zaki@embetrix.com>
 Date: Sun, 1 Mar 2026 16:20:49 +0100
 Subject: [PATCH] Add tls_groups config option and log TLS key exchange info
 
-Add tls_groups config option to specify allowed TLS key exchange groups via SSL_CTX_set1_groups_list
-and fall back to OpenSSL default groups when not specified.
+Add tls_groups config option to specify allowed TLS key exchange groups via
+SSL_CTX_set1_groups_list and fall back to OpenSSL default groups when not
+specified.
 
-Log TLS version cipher and negotiated key exchange group on client connection
+Log TLS version, cipher and negotiated key exchange group on client connection.
+
+Upstream-Status: Pending
 
 Signed-off-by: Ayoub Zaki <ayoub.zaki@embetrix.com>
 ---
- src/conf.c                      | 10 ++++++++
- src/handle_connect.c            | 43 +++++++++++++++++++++++++++++++++
- src/mosquitto_broker_internal.h |  1 +
- src/net.c                       | 12 +++++++++
- 4 files changed, 66 insertions(+)
-
-diff --git a/src/conf.c b/src/conf.c
-index a3eaef9e..511cbc29 100644
 --- a/src/conf.c
 +++ b/src/conf.c
-@@ -282,6 +282,7 @@ void config__cleanup(struct mosquitto__config *config)
- 			mosquitto__free(config->listeners[i].keyfile);
- 			mosquitto__free(config->listeners[i].ciphers);
- 			mosquitto__free(config->listeners[i].ciphers_tls13);
-+			mosquitto__free(config->listeners[i].tls_groups);
- 			mosquitto__free(config->listeners[i].psk_hint);
- 			mosquitto__free(config->listeners[i].crlfile);
- 			mosquitto__free(config->listeners[i].dhparamfile);
-@@ -443,6 +444,7 @@ int config__parse_args(struct mosquitto__config *config, int argc, char *argv[])
- 			|| config->default_listener.tls_engine_kpass_sha1
- 			|| config->default_listener.ciphers
- 			|| config->default_listener.ciphers_tls13
-+			|| config->default_listener.tls_groups
- 			|| config->default_listener.dhparamfile
- 			|| config->default_listener.psk_hint
- 			|| config->default_listener.require_certificate
-@@ -507,6 +509,7 @@ int config__parse_args(struct mosquitto__config *config, int argc, char *argv[])
- 		config->listeners[config->listener_count-1].keyfile = config->default_listener.keyfile;
- 		config->listeners[config->listener_count-1].ciphers = config->default_listener.ciphers;
- 		config->listeners[config->listener_count-1].ciphers_tls13 = config->default_listener.ciphers_tls13;
-+		config->listeners[config->listener_count-1].tls_groups = config->default_listener.tls_groups;
- 		config->listeners[config->listener_count-1].dhparamfile = config->default_listener.dhparamfile;
- 		config->listeners[config->listener_count-1].psk_hint = config->default_listener.psk_hint;
- 		config->listeners[config->listener_count-1].require_certificate = config->default_listener.require_certificate;
-@@ -1199,6 +1202,13 @@ static int config__read_file_core(struct mosquitto__config *config, bool reload,
- 					if(conf__parse_string(&token, "ciphers", &cur_listener->ciphers, saveptr)) return MOSQ_ERR_INVAL;
+@@ -430,6 +430,7 @@
+ 			mosquitto_FREE(config->listeners[i].keyfile);
+ 			mosquitto_FREE(config->listeners[i].ciphers);
+ 			mosquitto_FREE(config->listeners[i].ciphers_tls13);
++			mosquitto_FREE(config->listeners[i].tls_groups);
+ 			mosquitto_FREE(config->listeners[i].psk_hint);
+ 			mosquitto_FREE(config->listeners[i].crlfile);
+ 			mosquitto_FREE(config->listeners[i].tls_version);
+@@ -1668,6 +1669,13 @@
  #else
- 					log__printf(NULL, MOSQ_LOG_WARNING, "Warning: TLS support not available.");
-+#endif
+ 					log__printf(NULL, MOSQ_LOG_WARNING, "Warning: ciphers_tls1.3 support not available.");
+ #endif
 +				}else if(!strcmp(token, "tls_groups")){
 +#ifdef WITH_TLS
 +					if(reload) continue; /* Listeners not valid for reloading. */
-+					if(conf__parse_string(&token, "tls_groups", &cur_listener->tls_groups, saveptr)) return MOSQ_ERR_INVAL;
++					if(conf__parse_string(&token, "tls_groups", &cur_listener->tls_groups, &saveptr)) return MOSQ_ERR_INVAL;
 +#else
 +					log__printf(NULL, MOSQ_LOG_WARNING, "Warning: TLS support not available.");
- #endif
- 				}else if(!strcmp(token, "ciphers_tls1.3")){
- #if defined(WITH_TLS) && (!defined(LIBRESSL_VERSION_NUMBER) || LIBRESSL_VERSION_NUMBER > 0x3040000FL)
-diff --git a/src/handle_connect.c b/src/handle_connect.c
-index a441ba88..f983d9c5 100644
++#endif
+ 				}else if(!strcmp(token, "clientid") || !strcmp(token, "remote_clientid")){
+ #ifdef WITH_BRIDGE
+ 					REQUIRE_BRIDGE(token);
 --- a/src/handle_connect.c
 +++ b/src/handle_connect.c
-@@ -247,6 +247,49 @@ int connect__on_authorised(struct mosquitto *context, void *auth_data_out, uint1
- 		} else {
- 			log__printf(NULL, MOSQ_LOG_DEBUG, "No will message specified.");
- 		}
-+
-+#ifdef WITH_TLS
-+		if(context->ssl){
-+			const SSL_CIPHER *cipher = SSL_get_current_cipher(context->ssl);
-+			if(cipher){
-+				log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s TLS: version=%s cipher=%s",
-+						context->id ? context->id : context->address,
-+						SSL_get_version(context->ssl),
-+						SSL_CIPHER_get_name(cipher));
-+			}
+@@ -235,6 +235,34 @@
+ 				context->id,
+ 				SSL_get_cipher_version(context->ssl),
+ 				SSL_get_cipher_name(context->ssl));
 +#if OPENSSL_VERSION_NUMBER >= 0x30000000L
-+			{
-+				int nid = (int)SSL_get_negotiated_group(context->ssl);
-+				if(nid != NID_undef && nid != 0){
-+					const char *group_name = SSL_group_to_name(context->ssl, nid);
-+					if(!group_name) group_name = OBJ_nid2sn(nid);
-+					if(!group_name) group_name = "unknown";
-+					log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: %s",
-+							context->id ? context->id : context->address,
-+							group_name);
-+				}else{
-+					log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: default (not explicitly negotiated)",
-+							context->id ? context->id : context->address);
-+				}
++		{
++			int nid = (int)SSL_get_negotiated_group(context->ssl);
++			if(nid != NID_undef && nid != 0){
++				const char *group_name = SSL_group_to_name(context->ssl, nid);
++				if(!group_name) group_name = OBJ_nid2sn(nid);
++				if(!group_name) group_name = "unknown";
++				log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: %s",
++						context->id, group_name);
++			}else{
++				log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: default (not explicitly negotiated)",
++						context->id);
 +			}
++		}
 +#elif OPENSSL_VERSION_NUMBER >= 0x10101000L
-+			{
-+				/* Use SSL_get_shared_group as a fallback for OpenSSL 1.1.1+ */
-+				int nid = SSL_get_shared_group(context->ssl, 0);
-+				if(nid > 0){
-+					const char *group_name = OBJ_nid2sn(nid);
-+					if(!group_name) group_name = "unknown";
-+					log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: %s",
-+							context->id ? context->id : context->address,
-+							group_name);
-+				}else{
-+					log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: default",
-+							context->id ? context->id : context->address);
-+				}
++		{
++			int nid = SSL_get_shared_group(context->ssl, 0);
++			if(nid > 0){
++				const char *group_name = OBJ_nid2sn(nid);
++				if(!group_name) group_name = "unknown";
++				log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: %s",
++						context->id, group_name);
++			}else{
++				log__printf(NULL, MOSQ_LOG_NOTICE, "Client %s key exchange group: default",
++						context->id);
 +			}
-+#endif
 +		}
 +#endif
  	}
+ #endif
  
- 	context->ping_t = 0;
-diff --git a/src/mosquitto_broker_internal.h b/src/mosquitto_broker_internal.h
-index 7516f312..c418644a 100644
 --- a/src/mosquitto_broker_internal.h
 +++ b/src/mosquitto_broker_internal.h
-@@ -217,6 +217,7 @@ struct mosquitto__listener {
+@@ -251,6 +251,7 @@
  	char *tls_engine_kpass_sha1;
  	char *ciphers;
  	char *ciphers_tls13;
@@ -124,13 +84,11 @@ index 7516f312..c418644a 100644
  	char *psk_hint;
  	SSL_CTX *ssl_ctx;
  	char *crlfile;
-diff --git a/src/net.c b/src/net.c
-index 0196918a..62e967dd 100644
 --- a/src/net.c
 +++ b/src/net.c
-@@ -421,6 +421,18 @@ int net__tls_server_ctx(struct mosquitto__listener *listener)
+@@ -512,6 +512,18 @@
+ 		}
  	}
- #endif
  
 +	if(listener->tls_groups){
 +#if OPENSSL_VERSION_NUMBER >= 0x10101000L
@@ -144,9 +102,8 @@ index 0196918a..62e967dd 100644
 +#endif
 +	}
 +
- 	if(listener->dhparamfile){
- 		dhparamfile = mosquitto__fopen(listener->dhparamfile, "r", true);
- 		if(!dhparamfile){
--- 
+ 	return MOSQ_ERR_SUCCESS;
+ }
+ #endif
+--
 2.43.0
-

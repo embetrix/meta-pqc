@@ -7,8 +7,6 @@ SRC_URI = "git://github.com/open-quantum-safe/liboqs-python.git;branch=main;prot
 # SRCREV tagged 0.12.0
 SRCREV = "7906e7879a099fa34217035957d977314f99757d"
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "liboqs python3-setuptools-native"
 RDEPENDS:${PN} += "python3-cffi python3-ctypes"
 
