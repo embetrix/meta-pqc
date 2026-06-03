@@ -1,23 +1,27 @@
 header:
   version: 11
 machine: "qemux86-64"
-distro: poky
+distro: nodistro
 target:
   - oqs-demo-image
 repos:
   # It's current revision will be used to perform the build.
   meta-oqs:
-  poky:
-    url: "https://git.yoctoproject.org/git/poky"
-    branch: scarthgap
-    path: "layers"
+  openembedded-core:
+    url: https://git.openembedded.org/openembedded-core.git
+    branch: wrynose
+    path: "layers/openembedded-core"
     layers:
       meta:
-      meta-poky:
-      meta-yocto-bsp:
+  bitbake:
+    url: https://git.openembedded.org/bitbake.git
+    branch: "2.18"
+    path: "layers/bitbake"
+    layers:
+      bitbake: disabled
   meta-openembedded:
     url: "https://github.com/openembedded/meta-openembedded.git"
-    branch: scarthgap
+    branch: wrynose
     path: "layers/meta-openembedded"
     layers:
       meta-oe:
@@ -28,47 +32,25 @@ repos:
       meta-multimedia:
       meta-filesystems:
       meta-webserver:
-  meta-lts-mixins:
-    url: "https://git.yoctoproject.org/meta-lts-mixins"
-    branch: scarthgap/rust
-    path: "layers/meta-lts-mixins"
-  meta-clang:
-    url: "https://github.com/kraj/meta-clang.git"
-    branch: scarthgap
-    path: "layers/meta-clang"
   meta-freescale:
     url: "https://git.yoctoproject.org/git/meta-freescale.git"
-    branch: scarthgap
-    # workaround for the issue with the meta-coral-ai:
-    # https://github.com/embetrix/meta-coral-ai/issues/2
-    commit: 41b923e59e048b9b2942ff737a4ddac386954c62
+    branch: master
     path: "layers/meta-freescale"
   meta-freescale-3rdparty:
     url: "https://github.com/Freescale/meta-freescale-3rdparty.git"
-    branch: scarthgap
+    branch: master
     path: "layers/meta-freescale-3rdparty"
   meta-raspberrypi:
     url: "https://git.yoctoproject.org/git/meta-raspberrypi.git"
-    branch: scarthgap
+    branch: master
     path: "layers/meta-raspberrypi"
-  meta-stm32mp15x:
-    url: "https://github.com/embetrix/meta-stm32mp15x.git"
-    branch: scarthgap
     path: "layers/meta-stm32mp15x"
-  meta-coral-ai:
-    url: "https://github.com/embetrix/meta-coral-ai.git"
-    branch: scarthgap
-    path: "layers/meta-coral-ai"
 local_conf_header:
   standard: |
     CONF_VERSION = "2"
     INHERIT += "rm_work"
-    PACKAGE_CLASSES = "package_deb"
-    DISTRO_FEATURES += "systemd usrmerge wifi oqs"
-    VIRTUAL-RUNTIME_init_manager = "systemd"
-    DISTRO_FEATURES_BACKFILL_CONSIDERED += "sysvinit"
-  debug-tweaks: |
-    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+    DISTRO_FEATURES += "oqs"
+    EXTRA_IMAGE_FEATURES = "allow-empty-password empty-root-password allow-root-logins"
   sdk: |
     SDKMACHINE = "x86_64"
   license_flags: |
