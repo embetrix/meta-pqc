@@ -50,7 +50,7 @@ local_conf_header:
     CONF_VERSION = "2"
     INHERIT += "rm_work"
     DISTRO_FEATURES += "oqs"
-    EXTRA_IMAGE_FEATURES = "allow-empty-password empty-root-password allow-root-logins"
+    EXTRA_IMAGE_FEATURES = "allow-empty-password empty-root-password allow-root-login"
   sdk: |
     SDKMACHINE = "x86_64"
   license_flags: |
