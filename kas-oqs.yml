@@ -34,17 +34,16 @@ repos:
       meta-webserver:
   meta-freescale:
     url: "https://git.yoctoproject.org/git/meta-freescale.git"
-    branch: master
+    branch: wrynose
     path: "layers/meta-freescale"
   meta-freescale-3rdparty:
     url: "https://github.com/Freescale/meta-freescale-3rdparty.git"
-    branch: master
+    branch: wrynose
     path: "layers/meta-freescale-3rdparty"
   meta-raspberrypi:
     url: "https://git.yoctoproject.org/git/meta-raspberrypi.git"
-    branch: master
+    branch: wrynose
     path: "layers/meta-raspberrypi"
-    path: "layers/meta-stm32mp15x"
 local_conf_header:
   standard: |
     CONF_VERSION = "2"
