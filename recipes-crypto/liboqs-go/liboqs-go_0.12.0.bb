@@ -3,7 +3,7 @@ HOMEPAGE = "https://openquantumsafe.org"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://src/${GO_IMPORT}/LICENSE;md5=f3a7c2d87a74d51c6273ba64bc7c47ee"
 
-SRC_URI = "git://github.com/open-quantum-safe/liboqs-go.git;branch=main;protocol=https"
+SRC_URI = "git://github.com/open-quantum-safe/liboqs-go.git;branch=main;protocol=https;destsuffix=${GO_SRCURI_DESTSUFFIX}"
 # SRCREV tagged 0.12.0
 SRCREV = "eeb454f5d03ad474c6c353a11fab587c6029ac5c"
 
@@ -39,6 +39,10 @@ do_install:append() {
     for f in kem sig rand; do
             mv ${D}${bindir}/${f} ${D}${bindir}/oqs_go_${f}
     done
+    # Drop the build-time pkg-config files: they only exist to point
+    # pkg-config at the sysroot during do_compile and end up containing
+    # absolute build paths, which trips the buildpaths QA check.
+    rm -rf ${D}${libdir}/go/src/${GO_IMPORT}/.config ${D}${libdir}/go/src/${GO_IMPORT}/.config-static
 }
 
 # Split examples into a separate package
