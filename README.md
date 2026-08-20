@@ -193,7 +193,7 @@ KAS_MACHINE=qemux86-64 kas build kas-oqs.yml
 
 Run:
 ```sh
-KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio nographic qemuparams="-m 1024"'
+KAS_MACHINE=qemux86-64 kas shell kas-oqs.yml -c 'runqemu kvm serialstdio snapshot nographic qemuparams="-m 1024"'
 ```
 
 ## Tested Machines
