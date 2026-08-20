@@ -11,6 +11,8 @@ inherit pkgconfig cmake
 
 DEPENDS = "liboqs"
 
+EXTRA_OECMAKE += "-DLIBOQS_INCLUDE_DIR=${STAGING_INCDIR} -DLIBOQS_LIB_DIR=${STAGING_LIBDIR}"
+
 do_compile:append () {
     ${CMAKE_VERBOSE} cmake --build '${B}' --target examples -- ${EXTRA_OECMAKE_BUILD}
 }
